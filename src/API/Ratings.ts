@@ -1,19 +1,20 @@
 import axios from "axios";
-import { Item } from "../Models/Item";
-import { Rating } from "../Models/Rating";
-const os = require('os');
+import DrinkItem  from "../Models/DrinkItem";
+import Rating, { Ratings } from "../Models/Rating";
+//const os = require('os');
 
-const networkInterfaces = os.networkInterfaces();
-const ipAddress = networkInterfaces['eth0'][0]['address']
+//const networkInterfaces = os.networkInterfaces();
+const ipAddress = 'localhost'; 
 
-const backup = "http://136.244.18.136:8000/all-ratings";
+//const ipAddress = networkInterfaces['eth0'][0]['address']
+//const backup = "http://136.244.18.136:8000/all-ratings";
 
-export function getRatings () {
+export const getRatings = () => {
     const getRatingsUrl = `http://${ipAddress}:8000/all-ratings`;
 
-    axios.get(getRatingsUrl).then((response) => {
-        return response.data;
-  });
+    const ratings = axios.get<Ratings>(getRatingsUrl).then(response => {return response.data});
+
+    return ratings;
 }
 
 export function getRatingById (id: number) {
@@ -24,7 +25,7 @@ export function getRatingById (id: number) {
   });
 }
 
-export function postNewItem (item: Item) {
+export function postNewItem (item: DrinkItem) {
     const postItemUrl = `http://${ipAddress}:8000/new-item/`;
 
     axios.post(postItemUrl).then((response) => {
