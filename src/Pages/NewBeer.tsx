@@ -1,18 +1,23 @@
 import React from 'react';
 import '../Styles/App.css';
 import logo from '../Images/logo.svg';
-import ButtonAppBar from '../Components/AppBar';
 import * as RatingsAPI from "../API/Ratings";
 import { Ratings } from '../Models/Rating';
-import { Typography } from '@mui/material';
   
 export default function NewBeer() {
 
   const [message, setMessage] = React.useState<Ratings|null>(null);
 
-  const getAllRatings = () => {
-    RatingsAPI.getRatings()
-    .then((response: Ratings) =>{
+  const createNewBeer = () => {
+
+    const newDrinkItem =     {
+      id: 1,
+      name: 'New Beer Test',
+      submittedBy: 'New Beer Tester',
+    }
+
+    RatingsAPI.postNewDrinkItem(newDrinkItem)
+    .then((response) =>{
       setMessage(response)
     })
     .catch(error => console.log(error.message))
@@ -22,17 +27,16 @@ export default function NewBeer() {
   }
 
   React.useEffect(()=>{
-    getAllRatings()
+    createNewBeer()
   },[])
 
   return (
     <div className="App">
       <header className="App-header">
-      <ButtonAppBar></ButtonAppBar>
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <h2>
+          Input a new beer into the rating system!
+        </h2>
         <a
           className="App-link"
           href="https://reactjs.org"

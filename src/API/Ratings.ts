@@ -7,7 +7,6 @@ import Rating, { Ratings } from "../Models/Rating";
 const ipAddress = 'localhost'; 
 
 //const ipAddress = networkInterfaces['eth0'][0]['address']
-//const backup = "http://136.244.18.136:8000/all-ratings";
 
 export const getRatings = () => {
     const getRatingsUrl = `http://${ipAddress}:8000/all-ratings`;
@@ -25,18 +24,23 @@ export function getRatingById (id: number) {
   });
 }
 
-export function postNewItem (item: DrinkItem) {
+export function postNewDrinkItem (drinkItem: DrinkItem) {
     const postItemUrl = `http://${ipAddress}:8000/new-item/`;
 
-    axios.post(postItemUrl).then((response) => {
+    const postResponse = axios.post(postItemUrl).then((response) => {
         return response.data;
   });
+
+  return postResponse;
 }
 
 export function postRating (rating: Rating) {
     const postRatingUrl = `http://${ipAddress}:8000/rating/`;
 
-    axios.post(postRatingUrl).then((response) => {
+    const postResponse = axios.post(postRatingUrl).then((response) => {
         return response.data;
   });
+
+  return postResponse;
+
 }

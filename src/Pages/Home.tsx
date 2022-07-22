@@ -2,7 +2,7 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import InstagramIcon from '@mui/icons-material/Instagram';
+//import InstagramIcon from '@mui/icons-material/Instagram';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -43,13 +43,12 @@ const flexContainer = {
 
 const theme = createTheme();
 
-export default function Album() {
+export default function Homepage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <InstagramIcon/>
           <Typography variant="h6" color="inherit" noWrap>
             @valencianofilter
           </Typography>
