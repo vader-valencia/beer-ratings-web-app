@@ -9,25 +9,16 @@ import { SkinnyItem, SkinnyItems } from '../Models/DrinkItem';
 export default function NewBeer() {
 
   const [message, setMessage] = React.useState<Ratings|null>(null);
-  const testItems = [
-    {
-      id: 1,
-      name: 'beer',
-    },
-    {
-      id: 2,
-      name: 'wine',
-    },
-    {
-      id: 3,
-      name: 'bourbon',
-    },
-    {
-      id: 4,
-      name: 'tacos',
-    }
-  ];
-  const [skinnyItems, setSkinnyItems] = React.useState<SkinnyItems>(testItems);
+  const testItems : SkinnyItems = {
+    skinnyItems : [
+          {
+            id: 1,
+            name: "beer",
+          }
+        ]
+      };
+
+  const [displayItems, setdisplayItems] = React.useState<SkinnyItems>(testItems);
 
   const addItemRating = () => {
 
@@ -46,10 +37,10 @@ export default function NewBeer() {
     });
   }
 
-  const getSkinnyItemsForRatings = () => {
+  const getdisplayItemsForRatings = () => {
     RatingsAPI.getItemsSkinny()
     .then((response) =>{
-      setSkinnyItems(response)
+      setdisplayItems(response)
     })
     .catch(error => console.log(error.message))
     .finally(() => {
@@ -58,7 +49,7 @@ export default function NewBeer() {
   }
 
   React.useEffect(()=>{
-    getSkinnyItemsForRatings()
+    getdisplayItemsForRatings()
     addItemRating()
   },[])
   
@@ -79,7 +70,7 @@ export default function NewBeer() {
       >
         <div>
           <TextField
-            id="outlined-select-currency-native"
+            id="select-item-native"
             select
             label="Select an Item to Rate"
             value={currency}
@@ -89,79 +80,9 @@ export default function NewBeer() {
             }}
             helperText="Please select your currency"
           >
-            {skinnyItems.map((option: SkinnyItem) => (
+            {displayItems.map((option: SkinnyItem) => (
               <option key={option.id} value={option.id}>
                 {option.name}
-              </option>
-            ))}
-          </TextField>
-        </div>
-        <div>
-          <TextField
-            id="filled-select-currency"
-            select
-            label="Select"
-            value={currency}
-            onChange={handleChange}
-            helperText="Please select your currency"
-            variant="filled"
-          >
-            {skinnyItems.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            id="filled-select-currency-native"
-            select
-            label="Native select"
-            value={currency}
-            onChange={handleChange}
-            SelectProps={{
-              native: true,
-            }}
-            helperText="Please select your currency"
-            variant="filled"
-          >
-            {skinnyItems.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </TextField>
-        </div>
-        <div>
-          <TextField
-            id="standard-select-currency"
-            select
-            label="Select"
-            value={currency}
-            onChange={handleChange}
-            helperText="Please select your currency"
-            variant="standard"
-          >
-            {skinnyItems.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            id="standard-select-currency-native"
-            select
-            label="Native select"
-            value={currency}
-            onChange={handleChange}
-            SelectProps={{
-              native: true,
-            }}
-            helperText="Please select your currency"
-            variant="standard"
-          >
-            {skinnyItems.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
               </option>
             ))}
           </TextField>
