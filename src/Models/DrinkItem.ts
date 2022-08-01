@@ -3,3 +3,16 @@ export default interface DrinkItem{
     name: string
     submittedBy: string
 }
+
+export interface DrinkItems{
+    drinkItems: [DrinkItem]
+}
+
+export interface SkinnyItem{
+    id: number
+    name: string
+}
+
+export interface SkinnyItems{
+    skinnyItems: [SkinnyItem]
+}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import DrinkItem  from "../Models/DrinkItem";
+import DrinkItem, { SkinnyItems }  from "../Models/DrinkItem";
 import Rating, { Ratings } from "../Models/Rating";
 //const os = require('os');
 
@@ -8,16 +8,24 @@ const ipAddress = 'localhost';
 
 //const ipAddress = networkInterfaces['eth0'][0]['address']
 
-export const getRatings = () => {
-    const getRatingsUrl = `http://${ipAddress}:8000/all-ratings`;
+export const getItems = () => {
+    const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
 
     const ratings = axios.get<Ratings>(getRatingsUrl).then(response => {return response.data});
 
     return ratings;
 }
 
-export function getRatingById (id: number) {
-    const getRatingByIdUrl = `http://${ipAddress}:8000/rating/${id}`;
+export const getItemsSkinny = () => {
+    const getRatingsUrl = `http://${ipAddress}:8000/all-items-skinny`;
+
+    const ratings = axios.get<SkinnyItems>(getRatingsUrl).then(response => {return response.data});
+
+    return ratings;
+}
+
+export function getItemById (id: number) {
+    const getRatingByIdUrl = `http://${ipAddress}:8000/item/${id}`;
 
     axios.get(getRatingByIdUrl).then((response) => {
         return response.data;
