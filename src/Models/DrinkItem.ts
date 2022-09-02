@@ -5,7 +5,7 @@ export default interface DrinkItem{
 }
 
 export interface DrinkItems{
-    drinkItems: [DrinkItem]
+    drinkItems: DrinkItem[]
 }
 
 export interface SkinnyItem{
@@ -14,5 +14,5 @@ export interface SkinnyItem{
 }
 
 export interface SkinnyItems{
-    skinnyItems: [SkinnyItem]
+    skinnyItems: SkinnyItem[]
 }

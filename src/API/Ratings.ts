@@ -1,5 +1,5 @@
 import axios from "axios";
-import DrinkItem, { SkinnyItems }  from "../Models/DrinkItem";
+import DrinkItem, { SkinnyItem, SkinnyItems }  from "../Models/DrinkItem";
 import Rating, { Ratings } from "../Models/Rating";
 //const os = require('os');
 
