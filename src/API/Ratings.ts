@@ -1,5 +1,5 @@
 import axios from "axios";
-import DrinkItem, { SkinnyItem, SkinnyItems }  from "../Models/DrinkItem";
+import DrinkItem, { NewDrinkItem, SkinnyItem, SkinnyItems }  from "../Models/DrinkItem";
 import Rating, { Ratings } from "../Models/Rating";
 //const os = require('os');
 
@@ -32,7 +32,7 @@ export function getItemById (id: number) {
   });
 }
 
-export function postNewDrinkItem (drinkItem: DrinkItem) {
+export function postNewDrinkItem (drinkItem: NewDrinkItem) {
     const postItemUrl = `http://${ipAddress}:8000/new-item/`;
 
     const postResponse = axios.post(postItemUrl).then((response) => {

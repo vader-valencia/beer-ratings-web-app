@@ -4,6 +4,11 @@ export default interface DrinkItem{
     submittedBy: string
 }
 
+export interface NewDrinkItem{
+    name: string
+    submittedBy: string
+}
+
 export interface DrinkItems{
     drinkItems: DrinkItem[]
 }
