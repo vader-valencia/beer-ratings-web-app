@@ -4,6 +4,7 @@ import logo from '../Images/logo.svg';
 import * as RatingsAPI from "../API/Ratings";
 import { Ratings } from '../Models/Rating';
 import { Box, Button, Stack, TextField } from '@mui/material';
+import WebcamCapture from '../Components/WebcamCapture';
   
 export default function NewItem() {
 
@@ -73,6 +74,8 @@ export default function NewItem() {
           value={submittedBy}
           onChange={handleSubmittedByChange}
         />
+
+        <WebcamCapture/>
 
         <Button
           disabled={name === '' || submittedBy === ''}

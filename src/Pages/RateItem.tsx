@@ -3,7 +3,7 @@ import '../Styles/App.css';
 import logo from '../Images/logo.svg';
 import * as RatingsAPI from "../API/Ratings";
 import { Ratings } from '../Models/Rating';
-import { Box, TextField, MenuItem, Rating, Button, Stack } from '@mui/material';
+import { Box, TextField, MenuItem, Rating, Button } from '@mui/material';
 import { SkinnyItem, SkinnyItems } from '../Models/DrinkItem';
 import HoverRating from '../Components/HoverRating';
   
@@ -79,15 +79,14 @@ export default function RateItem() {
     }
   
     return (
-      <Stack
-      component="form"
-      sx={{
-        width: '25ch',
-      }}
-      spacing={2}
-      noValidate
-      autoComplete="off"
-    >
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
         <div>
           <TextField
           id="select-item"
@@ -118,6 +117,6 @@ export default function RateItem() {
           >
           Submit
         </Button>
-        </Stack>
+        </Box>
     );
   }
