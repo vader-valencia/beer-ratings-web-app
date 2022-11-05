@@ -71,10 +71,10 @@ export default function Homepage() {
               color="text.primary"
               gutterBottom
             >
-              Joseph's Beerthday 2022
+              Happy Hour!
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Enjoy responsibly, and rate good beer!
+              Have fun, and enjoy responsibly!
             </Typography>
             <Stack
               sx={{ pt: 4 }}
