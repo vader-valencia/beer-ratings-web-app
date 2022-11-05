@@ -9,29 +9,38 @@ const videoConstraints = {
   facingMode: "user"
 };
 
-export default function WebcamCapture() {
+interface WebcamCaptureProps{
+    image: string | null;
+    setImage(imageSrc: string | null): void;
+}
+
+export default function WebcamCapture(props: WebcamCaptureProps) {
 const webcamRef = React.useRef<Webcam>(null);
-const [imgSrc, setImgSrc] = useState<string | null>(null);
 
   const capture = React.useCallback(
     () => {
         if (webcamRef.current) {
             const imageSrc = webcamRef.current.getScreenshot();
-            setImgSrc(imageSrc);
+            props.setImage(imageSrc);
           }
-    },[webcamRef, setImgSrc]
+    },[webcamRef, props.setImage]
   );
+
 
   return (
     <div className="webcam-container">
-      <Webcam
+      {props.image===null
+      ?<Webcam
         audio={false}
         height={200}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         width={220}
         videoConstraints={videoConstraints}
-      />
+        />
+      :
+      <img src={props.image}/>}
+      
       <Button 
         onClick={(e)=>{e.preventDefault();capture();}}>
             Capture

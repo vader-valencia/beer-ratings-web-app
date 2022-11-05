@@ -11,6 +11,7 @@ export default function NewItem() {
   const [name, setName] = React.useState<string>('');
   const [submittedBy, setSubmittedBy] = React.useState<string>('');
   const [message, setMessage] = React.useState<Ratings|null>(null);
+  const [image, setImage] = React.useState<string | null>(null)
 
   const createNewBeer = () => {
 
@@ -18,6 +19,8 @@ export default function NewItem() {
       name: name,
       submittedBy: submittedBy,
     }
+
+    console.log(image)
 
     RatingsAPI.postNewDrinkItem(newDrinkItem)
     .then((response) =>{
@@ -75,10 +78,13 @@ export default function NewItem() {
           onChange={handleSubmittedByChange}
         />
 
-        <WebcamCapture/>
+        <WebcamCapture
+        image={image}
+        setImage={setImage}
+        />
 
         <Button
-          disabled={name === '' || submittedBy === ''}
+          disabled={name === '' || submittedBy === '' || image === null}
           onClick={() => {
             handleSubmit();
           }}
