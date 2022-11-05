@@ -29,7 +29,7 @@ const webcamRef = React.useRef<Webcam>(null);
 
   return (
     <div className="webcam-container">
-      {props.image===null
+      {props.image === null
       ?<Webcam
         audio={false}
         height={200}
@@ -40,11 +40,17 @@ const webcamRef = React.useRef<Webcam>(null);
         />
       :
       <img src={props.image}/>}
-      
+      {props.image === null ?
       <Button 
         onClick={(e)=>{e.preventDefault();capture();}}>
             Capture
         </Button>
+        : 
+        <Button 
+        onClick={(e)=>{e.preventDefault();props.setImage(null);}}>
+            Retake
+        </Button>
+        }
     </div>
   );
 };

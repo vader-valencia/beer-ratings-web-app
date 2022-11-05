@@ -7,6 +7,7 @@ export default interface DrinkItem{
 export interface NewDrinkItem{
     name: string
     submittedBy: string
+    image: string | null
 }
 
 export interface DrinkItems{

@@ -3,24 +3,26 @@ import '../Styles/App.css';
 import logo from '../Images/logo.svg';
 import * as RatingsAPI from "../API/Ratings";
 import { Ratings } from '../Models/Rating';
-import { Box, Button, Stack, TextField } from '@mui/material';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import WebcamCapture from '../Components/WebcamCapture';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import { Container } from '@mui/system';
   
 export default function NewItem() {
 
   const [name, setName] = React.useState<string>('');
   const [submittedBy, setSubmittedBy] = React.useState<string>('');
   const [message, setMessage] = React.useState<Ratings|null>(null);
-  const [image, setImage] = React.useState<string | null>(null)
+  const [image, setImage] = React.useState<string | null>(null);
+  const [optedForPhoto, setOptedForPhoto] = React.useState<boolean>(false);
 
   const createNewBeer = () => {
 
     const newDrinkItem =     {
       name: name,
       submittedBy: submittedBy,
+      image: image
     }
-
-    console.log(image)
 
     RatingsAPI.postNewDrinkItem(newDrinkItem)
     .then((response) =>{
@@ -78,13 +80,22 @@ export default function NewItem() {
           onChange={handleSubmittedByChange}
         />
 
-        <WebcamCapture
-        image={image}
-        setImage={setImage}
-        />
+        {optedForPhoto ?  
+          <WebcamCapture
+          image={image}
+          setImage={setImage}
+          /> 
+          : 
+          <Container>
+            <Button onClick={() => setOptedForPhoto(true)}>
+              <PhotoCameraIcon/>
+            </Button>
+            <Typography>Add a photo!</Typography>
+          </Container>
+        }
 
         <Button
-          disabled={name === '' || submittedBy === '' || image === null}
+          disabled={name === '' || submittedBy === ''}
           onClick={() => {
             handleSubmit();
           }}
