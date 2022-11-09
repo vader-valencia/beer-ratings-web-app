@@ -19,6 +19,7 @@ import { ListItem } from '@mui/material';
 import HomepageQRImg from '../Images/Beer_Ratings_Homepage.png';
 import NewBeerQRImg from '../Images/New_Beer.png';
 import RateABeerQRImg from '../Images/Rate_A_Beer.png';
+import QRSet from '../Components/QRSet';
 
 function Copyright() {
   return (
@@ -76,54 +77,10 @@ export default function Homepage() {
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Have fun, and enjoy responsibly!
             </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <img src={HomepageQRImg} className="App-logo" alt="Homepage QR Code" />
-              <img src={NewBeerQRImg} className="App-logo" alt="New Beer QR Code" />
-              <img src={RateABeerQRImg} className="App-logo" alt="Rate a Beer QR Code" />
-
-            </Stack>
+            <QRSet/>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">

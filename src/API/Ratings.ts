@@ -1,12 +1,24 @@
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import DrinkItem, { NewDrinkItem, SkinnyItem, SkinnyItems }  from "../Models/DrinkItem";
+import QRCodeQueryOptions from "../Models/QRCodeQueryOptions";
 import Rating, { Ratings } from "../Models/Rating";
+import {Buffer} from 'buffer';
 //const os = require('os');
 
 //const networkInterfaces = os.networkInterfaces();
 const ipAddress = 'localhost'; 
 
 //const ipAddress = networkInterfaces['eth0'][0]['address']
+
+export const getCreateItemQRCode = (portNum: number, queryOptions: QRCodeQueryOptions) => {
+    const getQRCodUrl = `http://${ipAddress}:8000/${portNum}/qr-code`
+    const qrCode = axios.get(getQRCodUrl, { params: queryOptions, responseType:'arraybuffer' })
+    .then((response) => {
+        return 'data:image/png;base64,'+Buffer.from(response.data, 'base64').toString('base64');
+    });
+    return qrCode;
+}
 
 export const getItems = () => {
     const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
