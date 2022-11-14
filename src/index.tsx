@@ -16,7 +16,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="new-category" element={<NewCategory/>} />
           <Route path="new-item" element={<NewItem/>} />
-          <Route path="rate-item" element={<RateItem/>} />
+          <Route path="rate-item" element={<RateItem />} />
           <Route path='category/:categoryName' element={<Category/>} />
         </Route>
       </Routes>

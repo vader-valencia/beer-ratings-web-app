@@ -9,16 +9,13 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import LabeledImage from '../Models/LabeledImage';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-interface CarouselImage {
-    label: string;
-    imagePath: string;
-}
 
 interface CarouselProps {
-    images : CarouselImage[];
+    images : LabeledImage[];
     isMobileStepperActive : boolean;
 }
 
@@ -72,7 +69,7 @@ export default function Carousel(props: CarouselProps) {
                   overflow: 'hidden',
                   width: '100%',
                 }}
-                src={step.imagePath}
+                src={step.imageSource}
                 alt={step.label}
               />
             ) : null}

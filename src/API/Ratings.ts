@@ -5,6 +5,7 @@ import QRCodeQueryOptions from "../Models/QRCodeRequestQueryOptions";
 import Rating, { Ratings } from "../Models/Rating";
 import {Buffer} from 'buffer';
 import Category from "../Models/Category";
+import LabeledImage from "../Models/LabeledImage";
 //const os = require('os');
 
 //const networkInterfaces = os.networkInterfaces();
@@ -75,3 +76,74 @@ export function postNewCategory(newCategory: Category ) {
 
   return postResponse;
 }
+
+export function getCategoryTopRated(numItems: number, categoryNameInUrl: string) {
+    const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
+
+    const ratings = axios.get<LabeledImage[]>(getRatingsUrl).then(response => {return response.data});
+
+    return ratings;
+
+    /*
+    const images : LabeledImage[] = [
+        {
+          label: 'San Francisco – Oakland Bay Bridge, United States',
+          imageSource:
+            'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+        },
+        {
+          label: 'Bird',
+          imageSource:
+            'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+        },
+        {
+          label: 'Bali, Indonesia',
+          imageSource:
+            'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
+        },
+        {
+          label: 'Goč, Serbia',
+          imageSource:
+            'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+        },
+      ];
+
+    return images;
+    */
+}
+
+export function getAllTopRated(numItems: number) {
+    const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
+
+    const ratings = axios.get<LabeledImage[]>(getRatingsUrl).then(response => {return response.data});
+
+    return ratings;
+
+    /*
+    const images : LabeledImage[] = [
+        {
+          label: 'San Francisco – Oakland Bay Bridge, United States',
+          imageSource:
+            'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+        },
+        {
+          label: 'Bird',
+          imageSource:
+            'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+        },
+        {
+          label: 'Bali, Indonesia',
+          imageSource:
+            'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
+        },
+        {
+          label: 'Goč, Serbia',
+          imageSource:
+            'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+        },
+      ];
+
+    return images;
+    */
+}
+

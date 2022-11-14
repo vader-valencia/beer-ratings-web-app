@@ -21,6 +21,11 @@ import RateABeerQRImg from '../Images/Rate_A_Beer.png';
 import QRSet from '../Components/QRSet';
 import Carousel from '../Components/Carousel';
 import { QRCodeOptions } from '../Models/QRCodeRequestQueryOptions';
+import LabeledImage from '../Models/LabeledImage';
+import HomePageCarousel from '../Components/HomePageCarousel';
+import * as RatingsAPI from "../API/Ratings";
+import CallableCarousel from '../Components/HomePageCarousel';
+
 
 function Copyright() {
   return (
@@ -43,33 +48,9 @@ const flexContainer = {
   padding: 0,
 };
 
-const images = [
-  {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
-    imagePath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bird',
-    imagePath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bali, Indonesia',
-    imagePath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
-  },
-  {
-    label: 'Goč, Serbia',
-    imagePath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-];
-
 const homePage : QRCodeOptions = {path:'', altText: 'Home Page', fillColor:'blue', backgroundColor:'white'}
 const newItem : QRCodeOptions = {path:'new-item', altText:'New Item', fillColor:'red', backgroundColor:'white'}
 const rateItem : QRCodeOptions = {path:'rate-item', altText:'Rate Item', fillColor:'blue', backgroundColor:'white'}
-
 const QRArray = [homePage, newItem, rateItem]
 
 const theme = createTheme();
@@ -112,14 +93,12 @@ export default function Homepage() {
             QRCodesToGenerate={QRArray}
             />
 
-          <Carousel
-          images={images}
-          isMobileStepperActive={false}
-          />
+            <CallableCarousel 
+            getFunction={RatingsAPI.getAllTopRated} 
+            getFunctionArguments={[10]} 
+            />
+
           </Container>
-
-
-
         </Box>
 
 
