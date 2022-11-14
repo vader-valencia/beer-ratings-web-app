@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import DrinkItem, { NewDrinkItem, SkinnyItem, SkinnyItems }  from "../Models/DrinkItem";
-import QRCodeQueryOptions from "../Models/QRCodeQueryOptions";
+import QRCodeQueryOptions from "../Models/QRCodeRequestQueryOptions";
 import Rating, { Ratings } from "../Models/Rating";
 import {Buffer} from 'buffer';
+import Category from "../Models/Category";
 //const os = require('os');
 
 //const networkInterfaces = os.networkInterfaces();
@@ -63,4 +64,14 @@ export function postRating (rating: Rating) {
 
   return postResponse;
 
+}
+
+export function postNewCategory(newCategory: Category ) {
+    const postCategoryUrl = `http://${ipAddress}:8000/category/`;
+
+    const postResponse = axios.post(postCategoryUrl).then((response) => {
+        return response.data;
+  });
+
+  return postResponse;
 }

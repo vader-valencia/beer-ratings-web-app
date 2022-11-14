@@ -2,7 +2,6 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-//import InstagramIcon from '@mui/icons-material/Instagram';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -20,13 +19,15 @@ import HomepageQRImg from '../Images/Beer_Ratings_Homepage.png';
 import NewBeerQRImg from '../Images/New_Beer.png';
 import RateABeerQRImg from '../Images/Rate_A_Beer.png';
 import QRSet from '../Components/QRSet';
+import Carousel from '../Components/Carousel';
+import { QRCodeOptions } from '../Models/QRCodeRequestQueryOptions';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      {'Copyright ©'}
+      <Link color="inherit" href="https://github.com/vader-valencia/vader-valencia/">
+        Joseph Valencia
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -41,6 +42,35 @@ const flexContainer = {
   flexDirection: 'row',
   padding: 0,
 };
+
+const images = [
+  {
+    label: 'San Francisco – Oakland Bay Bridge, United States',
+    imagePath:
+      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+  },
+  {
+    label: 'Bird',
+    imagePath:
+      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+  },
+  {
+    label: 'Bali, Indonesia',
+    imagePath:
+      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
+  },
+  {
+    label: 'Goč, Serbia',
+    imagePath:
+      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+  },
+];
+
+const homePage : QRCodeOptions = {path:'', altText: 'Home Page', fillColor:'blue', backgroundColor:'white'}
+const newItem : QRCodeOptions = {path:'new-item', altText:'New Item', fillColor:'red', backgroundColor:'white'}
+const rateItem : QRCodeOptions = {path:'rate-item', altText:'Rate Item', fillColor:'blue', backgroundColor:'white'}
+
+const QRArray = [homePage, newItem, rateItem]
 
 const theme = createTheme();
 
@@ -77,9 +107,22 @@ export default function Homepage() {
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Have fun, and enjoy responsibly!
             </Typography>
-            <QRSet/>
+            <QRSet
+            portNumber={3000}
+            QRCodesToGenerate={QRArray}
+            />
+
+          <Carousel
+          images={images}
+          isMobileStepperActive={false}
+          />
           </Container>
+
+
+
         </Box>
+
+
 
       </main>
       {/* Footer */}

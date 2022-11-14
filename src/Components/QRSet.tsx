@@ -1,47 +1,45 @@
 import { Stack, Typography } from "@mui/material";
 import React from "react";
 import * as RatingsApi from "../API/Ratings";
-import QRCodeQueryOptions from "../Models/QRCodeQueryOptions";
+import { QRCodeOptions } from "../Models/QRCodeRequestQueryOptions";
 import { Container } from '@mui/system';
+import QRCodeRequestQueryOptions from "../Models/QRCodeRequestQueryOptions";
 
+interface QRSetProps{
+    portNumber : number;
+    QRCodesToGenerate : QRCodeOptions[];
+}
 
+interface QRResults{
+    image: string;
+    altText: string;
+}
 
-export default function QRSet(){
-    const [homePageQRImage, setHomePageQRImage] = React.useState<string>()
-    const [newItemQRImage, setNewItemQRImage] = React.useState<string>()
-    const [rateItemQRImage, setRateItemQRImage] = React.useState<string>()
+export default function QRSet(props: QRSetProps){
+    const [QRArray, setQRArray] = React.useState<QRResults[]>([]);
 
     React.useEffect(() => {
-        const homePage : QRCodeQueryOptions = {path:''}
-        const qr = RatingsApi.getCreateItemQRCode(3000,homePage)
-        .then((response ) => {
-            console.log(response)
-            setHomePageQRImage(response.toString())
-        })
-        .catch(
-            error =>
-            console.log(error.message)
-        )
-        RatingsApi.getCreateItemQRCode(3000,homePage)
-        .then((response) => {
-            console.log(response)
+        props.QRCodesToGenerate.map((qrOptions) => {
+            const qrQuery : QRCodeRequestQueryOptions = {
+                path: qrOptions.path,
+                fillColor: qrOptions.fillColor,
+                backgroundColor: qrOptions.backgroundColor
+            }
 
-            setNewItemQRImage(response.toString())
+            RatingsApi.getCreateItemQRCode(props.portNumber,qrQuery)
+            .then((response ) => {
+                setQRArray(oldArr => [...oldArr, 
+                    {
+                        image: response.toString(),
+                        altText : qrOptions.altText
+                    }
+                ]);
+            })
+            .catch(
+                error =>
+                console.log(error.message)
+            )
         })
-        .catch(
-            error =>
-            console.log(error.message)
-        )
-        RatingsApi.getCreateItemQRCode(3000,homePage)
-        .then((response) => {
-            console.log(response)
-
-            setRateItemQRImage(response.toString())
-        })
-        .catch(
-            error =>
-            console.log(error.message)
-        )
     },[])
 
     return(
@@ -51,20 +49,16 @@ export default function QRSet(){
         spacing={2}
         justifyContent="center"
       >
-        <Container>
-            <img src={homePageQRImage} className="App-logo" alt="Homepage QR Code" />
-            <Typography align={'center'}>Homepage</Typography>
-        </Container>
-        
-        <Container>
-            <img src={newItemQRImage} className="App-logo" alt="New Beer QR Code" />
-            <Typography align={'center'}>New Item</Typography>
-        </Container>
-        
-        <Container>
-            <img src={rateItemQRImage} className="App-logo" alt="Rate an Item QR Code" />
-            <Typography align={'center'}>Rate an Item</Typography>
-        </Container>
+        {
+            QRArray.map((qr)=>{
+                return (
+                    <Container>
+                        <img src={qr.image} className="App-logo" alt={qr.altText} />
+                        <Typography align={'center'}>Homepage</Typography>
+                    </Container>
+                )
+            })
+        }
 
       </Stack>
     )
