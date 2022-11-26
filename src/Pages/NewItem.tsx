@@ -7,7 +7,7 @@ import { Box, Button, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typ
 import WebcamCapture from '../Components/WebcamCapture';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { Container } from '@mui/system';
-import Category from '../Models/Category';
+import Category, { CategoryResponse } from '../Models/Category';
   
 export default function NewItem() {
 
@@ -16,26 +16,36 @@ export default function NewItem() {
   const [name, setName] = React.useState<string>('');
   const [submittedBy, setSubmittedBy] = React.useState<string>('');
   const [errorMessage, setErrorMessage] = React.useState<string>('');
-  const [error, setIsError] = React.useState<boolean>(false);
+  const [isLoadingError, setisLoadingError] = React.useState<boolean>(false);
+  const [isSubmitLoading, setIsSubmitLoading] = React.useState<boolean>(false);
+  const [isSubmitError, setIsSubmitError] = React.useState<boolean>(false);
+  const [submitSuccessMessage, setSubmitSuccessMessage] = React.useState<string>('');
+  const [submitErrorMessage, setSubmitErrorMessage] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [image, setImage] = React.useState<string | null>(null);
   const [optedForPhoto, setOptedForPhoto] = React.useState<boolean>(false);
 
-  const createNewBeer = () => {
+  const createNewItem = () => {
 
     const newDrinkItem =     {
+      category: category,
       name: name,
       submittedBy: submittedBy,
       image: image
     }
 
+    setIsSubmitLoading(true)
     RatingsAPI.postNewDrinkItem(newDrinkItem)
     .then((response) =>{
-      setErrorMessage(response)
+
     })
-    .catch(error => console.log(error.message))
+    .catch(error => {
+      console.log(error.message)
+      setSubmitErrorMessage(error.message)
+      setIsSubmitError(true)
+    })
     .finally(() => {
-      console.log('Experiment completed');
+      setIsSubmitLoading(false)
     });
   }
 
@@ -52,17 +62,17 @@ export default function NewItem() {
   };
 
   const handleSubmit = () => {
-    createNewBeer()
+    createNewItem()
   }
 
   React.useEffect(()=>{
     RatingsAPI.getCategories()
-    .then((response: Category[]) => {
-      setCategories(response)
-      setIsError(false)
+    .then((response: CategoryResponse) => {
+      setCategories(response.items)
+      setisLoadingError(false)
   })
   .catch((error: { message: any; }) => {
-      setIsError(true)
+      setisLoadingError(true)
       setErrorMessage(error.message)
   })
   .finally(() => {
@@ -71,6 +81,14 @@ export default function NewItem() {
   },[])
 
   return (
+    isLoading ?
+    <></>
+    :
+    (isLoadingError ? 
+      <Typography>
+        {errorMessage}
+      </Typography>
+      :
     <Stack
       component="form"
       sx={{
@@ -141,7 +159,18 @@ export default function NewItem() {
           Submit
         </Button>
 
+        {
+          isSubmitLoading ? 
+          <></>
+            :
+            isSubmitError ?
+            <Typography>{submitErrorMessage}</Typography>
+            :
+            <Typography>{submitSuccessMessage}</Typography>
+        }
+
         </Stack>
+    )
   );
 
 }

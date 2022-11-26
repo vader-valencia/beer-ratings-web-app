@@ -4,7 +4,7 @@ import DrinkItem, { NewDrinkItem, SkinnyItem, SkinnyItems }  from "../Models/Dri
 import QRCodeQueryOptions from "../Models/QRCodeRequestQueryOptions";
 import Rating, { Ratings } from "../Models/Rating";
 import {Buffer} from 'buffer';
-import Category from "../Models/Category";
+import Category, { CategoryResponse } from "../Models/Category";
 import LabeledImage from "../Models/LabeledImage";
 //const os = require('os');
 
@@ -23,10 +23,11 @@ export const getCreateItemQRCode = (portNum: number, queryOptions: QRCodeQueryOp
 }
 
 export const getCategories = () => {
-  const getCategoriesUrl = `http://${ipAddress}:8000/all-items`;
+  const getCategoriesUrl = `http://${ipAddress}:8000/all-categories`;
 
-  const categories = axios.get<Category[]>(getCategoriesUrl).then(response => {return response.data});
-
+  const categories = axios.get<CategoryResponse>(getCategoriesUrl).then((response) => {
+    console.log(response)
+    return response.data});
   return categories;
 }
 
