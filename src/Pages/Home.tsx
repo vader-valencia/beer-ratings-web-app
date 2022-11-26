@@ -44,10 +44,10 @@ const flexContainer = {
   padding: 0,
 };
 
-const homePage : QRCodeOptions = {path:'', altText: 'Home Page', fillColor:'black', backgroundColor:'white'}
-const newCategory : QRCodeOptions = {path:'new-category', altText:'New Category', fillColor:'gold', backgroundColor:'white'}
-const newItem : QRCodeOptions = {path:'new-item', altText:'New Item', fillColor:'black', backgroundColor:'white'}
-const rateItem : QRCodeOptions = {path:'rate-item', altText:'Rate Item', fillColor:'gold', backgroundColor:'white'}
+const homePage : QRCodeOptions = {webPath:'', altText: 'Home Page', fillColor:'black', backgroundColor:'gold'}
+const newCategory : QRCodeOptions = {webPath:'new-category', altText:'New Category', fillColor:'gold', backgroundColor:'black'}
+const newItem : QRCodeOptions = {webPath:'new-item', altText:'New Item', fillColor:'black', backgroundColor:'gold'}
+const rateItem : QRCodeOptions = {webPath:'rate-item', altText:'Rate Item', fillColor:'gold', backgroundColor:'black'}
 const QRArray = [homePage, newCategory, newItem, rateItem]
 
 const theme = createTheme();

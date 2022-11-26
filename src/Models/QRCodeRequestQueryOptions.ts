@@ -1,11 +1,11 @@
 export default interface QRCodeRequestQueryOptions {
-    path: string;
+    webPath: string;
     fillColor?: string;
     backgroundColor?: string;
 }
 
 export interface QRCodeOptions {
-    path: string;
+    webPath: string;
     altText: string;
     fillColor?: string;
     backgroundColor?: string;

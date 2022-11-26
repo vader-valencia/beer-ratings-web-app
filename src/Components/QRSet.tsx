@@ -21,7 +21,7 @@ export default function QRSet(props: QRSetProps) {
     React.useEffect(() => {
         props.QRCodesToGenerate.map((qrOptions) => {
             const qrQuery: QRCodeRequestQueryOptions = {
-                path: qrOptions.path,
+                webPath: qrOptions.webPath,
                 fillColor: qrOptions.fillColor,
                 backgroundColor: qrOptions.backgroundColor
             }
