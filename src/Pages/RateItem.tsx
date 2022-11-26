@@ -34,10 +34,9 @@ export default function RateItem() {
 
   const addItemRating = () => {
     const newRating = {
-      itemId: displayItem as number,
       rating: value as number
     }
-    RatingsAPI.postRating(newRating)
+    RatingsAPI.postRating(displayItem as number, newRating)
       .then((response) => {
         setMessage(response)
       })

@@ -69,8 +69,8 @@ export function postNewItem (item: NewDrinkItem) {
   return postResponse;
 }
 
-export function postRating (rating: Rating) {
-    const postRatingUrl = `http://${ipAddress}:8000/ratings/`;
+export function postRating (itemId: number, rating: Rating) {
+    const postRatingUrl = `http://${ipAddress}:8000/ratings/${itemId}`;
 
     const postResponse = axios.post(postRatingUrl, rating).then((response) => {
         return response.data;
