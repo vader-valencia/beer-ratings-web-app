@@ -50,10 +50,11 @@ export function getItemById (id: number) {
   });
 }
 
-export function postNewDrinkItem (drinkItem: NewDrinkItem) {
+export function postNewItem (item: NewDrinkItem) {
+  console.log(item)
     const postItemUrl = `http://${ipAddress}:8000/item/`;
 
-    const postResponse = axios.post(postItemUrl).then((response) => {
+    const postResponse = axios.post(postItemUrl, item).then((response) => {
         return response.data;
   });
 
@@ -63,7 +64,7 @@ export function postNewDrinkItem (drinkItem: NewDrinkItem) {
 export function postRating (rating: Rating) {
     const postRatingUrl = `http://${ipAddress}:8000/rating/`;
 
-    const postResponse = axios.post(postRatingUrl).then((response) => {
+    const postResponse = axios.post(postRatingUrl, rating).then((response) => {
         return response.data;
   });
 
@@ -74,7 +75,7 @@ export function postRating (rating: Rating) {
 export function postNewCategory(newCategory: Category ) {
     const postCategoryUrl = `http://${ipAddress}:8000/category/`;
 
-    const postResponse = axios.post(postCategoryUrl).then((response) => {
+    const postResponse = axios.post(postCategoryUrl, newCategory).then((response) => {
         return response.data;
   });
 

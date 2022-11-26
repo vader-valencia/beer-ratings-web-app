@@ -12,7 +12,7 @@ import PostResponse from '../Models/PostResponse';
   
 export default function NewItem() {
 
-  const [category, setCategory] = React.useState<string>('');
+  const [categoryId, setCategoryId] = React.useState<number>(-1);
   const [categories, setCategories] = React.useState<Category[]>([]);
   const [name, setName] = React.useState<string>('');
   const [submittedBy, setSubmittedBy] = React.useState<string>('');
@@ -25,23 +25,24 @@ export default function NewItem() {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [image, setImage] = React.useState<string | null>(null);
   const [optedForPhoto, setOptedForPhoto] = React.useState<boolean>(false);
+  const [description, setDescription] = React.useState<string>('');
 
   const createNewItem = () => {
 
-    const newDrinkItem =     {
-      category: category,
+    const newItem =     {
+      categoryId: categoryId,
       name: name,
+      description: description,
       submittedBy: submittedBy,
       image: image
     }
 
     setIsSubmitLoading(true)
-    RatingsAPI.postNewDrinkItem(newDrinkItem)
+    RatingsAPI.postNewItem(newItem)
     .then((response : PostResponse) =>{
       setSubmitSuccessMessage(response.successMessage)
     })
     .catch(error => {
-      console.log(error.message)
       setSubmitErrorMessage(error.message)
       setIsSubmitError(true)
     })
@@ -51,11 +52,15 @@ export default function NewItem() {
   }
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
-    setCategory(event.target.value);
+    setCategoryId(parseInt(event.target.value));
   };
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
+  };
+
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(event.target.value);
   };
 
   const handleSubmittedByChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +108,7 @@ export default function NewItem() {
         <Select
           labelId="input-category"
           id="demo-simple-select-standard"
-          value={category}
+          value={categoryId.toString()}
           onChange={handleCategoryChange}
           label="Age"
         >
@@ -112,7 +117,10 @@ export default function NewItem() {
           </MenuItem>
           {
             categories.map((category) =>(
-              <MenuItem value={category.name}>{category.name}</MenuItem>
+              <MenuItem 
+                value={category.id}
+                key={category.id+'-key'}
+              >{category.name}</MenuItem>
             ))
           }
         </Select>
@@ -125,6 +133,16 @@ export default function NewItem() {
           maxRows={4}
           value={name}
           onChange={handleNameChange}
+        />
+
+        <TextField
+          id="input-description"
+          label="Description"
+          multiline
+          required
+          maxRows={4}
+          value={description}
+          onChange={handleDescriptionChange}
         />
 
         <TextField
@@ -152,7 +170,7 @@ export default function NewItem() {
         }
 
         <Button
-          disabled={category === '' || name === '' || submittedBy === ''}
+          disabled={categoryId === null || name === '' || submittedBy === '' || description === ''}
           onClick={() => {
             handleSubmit();
           }}

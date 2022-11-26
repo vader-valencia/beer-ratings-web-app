@@ -5,7 +5,9 @@ export default interface DrinkItem{
 }
 
 export interface NewDrinkItem{
+    categoryId: number
     name: string
+    description: string
     submittedBy: string
     image: string | null
 }

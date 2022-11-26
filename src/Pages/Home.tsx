@@ -58,9 +58,6 @@ export default function Homepage() {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            @valencianofilter
-          </Typography>
         </Toolbar>
       </AppBar>
       <main>

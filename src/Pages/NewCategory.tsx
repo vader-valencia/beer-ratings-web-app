@@ -50,7 +50,7 @@ export default function NewCategory() {
 
             <TextField
                 id="input-name"
-                label="Item Name"
+                label="Category Name"
                 multiline
                 required
                 maxRows={4}
