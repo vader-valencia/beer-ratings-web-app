@@ -8,6 +8,7 @@ import WebcamCapture from '../Components/WebcamCapture';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { Container } from '@mui/system';
 import Category, { CategoryResponse } from '../Models/Category';
+import PostResponse from '../Models/PostResponse';
   
 export default function NewItem() {
 
@@ -36,8 +37,8 @@ export default function NewItem() {
 
     setIsSubmitLoading(true)
     RatingsAPI.postNewDrinkItem(newDrinkItem)
-    .then((response) =>{
-
+    .then((response : PostResponse) =>{
+      setSubmitSuccessMessage(response.successMessage)
     })
     .catch(error => {
       console.log(error.message)

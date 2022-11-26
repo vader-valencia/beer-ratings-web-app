@@ -6,12 +6,8 @@ import Rating, { Ratings } from "../Models/Rating";
 import {Buffer} from 'buffer';
 import Category, { CategoryResponse } from "../Models/Category";
 import LabeledImage from "../Models/LabeledImage";
-//const os = require('os');
 
-//const networkInterfaces = os.networkInterfaces();
 const ipAddress = 'localhost'; 
-
-//const ipAddress = networkInterfaces['eth0'][0]['address']
 
 export const getCreateItemQRCode = (portNum: number, queryOptions: QRCodeQueryOptions) => {
     const getQRCodUrl = `http://${ipAddress}:8000/${portNum}/qr-code`
@@ -26,7 +22,6 @@ export const getCategories = () => {
   const getCategoriesUrl = `http://${ipAddress}:8000/all-categories`;
 
   const categories = axios.get<CategoryResponse>(getCategoriesUrl).then((response) => {
-    console.log(response)
     return response.data});
   return categories;
 }
@@ -56,7 +51,7 @@ export function getItemById (id: number) {
 }
 
 export function postNewDrinkItem (drinkItem: NewDrinkItem) {
-    const postItemUrl = `http://${ipAddress}:8000/new-item/`;
+    const postItemUrl = `http://${ipAddress}:8000/item/`;
 
     const postResponse = axios.post(postItemUrl).then((response) => {
         return response.data;
