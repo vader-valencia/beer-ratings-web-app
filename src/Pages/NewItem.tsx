@@ -1,5 +1,5 @@
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
-import { Button, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import React from 'react';
 import * as RatingsAPI from "../API/Ratings";
@@ -103,12 +103,14 @@ export default function NewItem() {
       autoComplete="off"
     >
 
+    <FormControl>
+    <InputLabel id="input-category-select-label">Category</InputLabel>
         <Select
           labelId="input-category"
           id="demo-simple-select-standard"
           value={categoryId.toString()}
           onChange={handleCategoryChange}
-          label="Age"
+          label="Category"
         >
           <MenuItem value="">
             <em>None</em>
@@ -122,6 +124,7 @@ export default function NewItem() {
             ))
           }
         </Select>
+      </FormControl>
 
         <TextField
           id="input-name"

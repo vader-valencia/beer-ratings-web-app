@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import DrinkItem, { NewDrinkItem, SkinnyItem, SkinnyItems }  from "../Models/DrinkItem";
+import DrinkItem, { DrinkItems, NewDrinkItem, SkinnyItem, SkinnyItems }  from "../Models/DrinkItem";
 import QRCodeQueryOptions from "../Models/QRCodeRequestQueryOptions";
 import Rating, { Ratings } from "../Models/Rating";
 import {Buffer} from 'buffer';
@@ -19,7 +19,7 @@ export const getCreateItemQRCode = (portNum: number, queryOptions: QRCodeQueryOp
 }
 
 export const getCategories = () => {
-  const getCategoriesUrl = `http://${ipAddress}:8000/all-categories`;
+  const getCategoriesUrl = `http://${ipAddress}:8000/categories`;
 
   const categories = axios.get<CategoryResponse>(getCategoriesUrl).then((response) => {
     return response.data});
@@ -27,11 +27,19 @@ export const getCategories = () => {
 }
 
 export const getItems = () => {
-    const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
+    const getRatingsUrl = `http://${ipAddress}:8000/items`;
 
     const ratings = axios.get<Ratings>(getRatingsUrl).then(response => {return response.data});
 
     return ratings;
+}
+
+export const getItemsByCateogryId = (categoryId: number) => {
+  const getItemsByCateogryIdUrl = `http://${ipAddress}:8000/${categoryId}/items`;
+
+  const ratings = axios.get<DrinkItems>(getItemsByCateogryIdUrl).then(response => {return response.data});
+
+  return ratings;
 }
 
 export const getItemsSkinny = () => {
@@ -43,7 +51,7 @@ export const getItemsSkinny = () => {
 }
 
 export function getItemById (id: number) {
-    const getRatingByIdUrl = `http://${ipAddress}:8000/item/${id}`;
+    const getRatingByIdUrl = `http://${ipAddress}:8000/items/${id}`;
 
     axios.get(getRatingByIdUrl).then((response) => {
         return response.data;
@@ -52,7 +60,7 @@ export function getItemById (id: number) {
 
 export function postNewItem (item: NewDrinkItem) {
   console.log(item)
-    const postItemUrl = `http://${ipAddress}:8000/item/`;
+    const postItemUrl = `http://${ipAddress}:8000/items/`;
 
     const postResponse = axios.post(postItemUrl, item).then((response) => {
         return response.data;
@@ -62,7 +70,7 @@ export function postNewItem (item: NewDrinkItem) {
 }
 
 export function postRating (rating: Rating) {
-    const postRatingUrl = `http://${ipAddress}:8000/rating/`;
+    const postRatingUrl = `http://${ipAddress}:8000/ratings/`;
 
     const postResponse = axios.post(postRatingUrl, rating).then((response) => {
         return response.data;
@@ -73,7 +81,7 @@ export function postRating (rating: Rating) {
 }
 
 export function postNewCategory(newCategory: Category ) {
-    const postCategoryUrl = `http://${ipAddress}:8000/category/`;
+    const postCategoryUrl = `http://${ipAddress}:8000/categories/`;
 
     const postResponse = axios.post(postCategoryUrl, newCategory).then((response) => {
         return response.data;
@@ -83,7 +91,7 @@ export function postNewCategory(newCategory: Category ) {
 }
 
 export function getCategoryTopRated(numItems: number, categoryNameInUrl: string) {
-    const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
+    const getRatingsUrl = `http://${ipAddress}:8000/items`;
 
     const ratings = axios.get<LabeledImageListResponse>(getRatingsUrl).then(response => {return response.data});
 
@@ -118,7 +126,7 @@ export function getCategoryTopRated(numItems: number, categoryNameInUrl: string)
 }
 
 export function getAllTopRated(numItems: number) {
-    const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
+    const getRatingsUrl = `http://${ipAddress}:8000/items`;
 
     const ratings = axios.get<LabeledImageListResponse>(getRatingsUrl).then(response => {return response.data});
 

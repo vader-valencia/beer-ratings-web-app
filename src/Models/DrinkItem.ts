@@ -13,7 +13,7 @@ export interface NewDrinkItem{
 }
 
 export interface DrinkItems{
-    drinkItems: DrinkItem[]
+    items: DrinkItem[]
 }
 
 export interface SkinnyItem{
