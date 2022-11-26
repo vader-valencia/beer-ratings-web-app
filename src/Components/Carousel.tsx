@@ -49,7 +49,7 @@ export default function Carousel(props: CarouselProps) {
           bgcolor: 'background.default',
         }}
       >
-      {/*<Typography>{props.images[activeStep].label}</Typography>*/}
+      {<Typography>{props.images[activeStep].label}</Typography>}
       </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -58,7 +58,8 @@ export default function Carousel(props: CarouselProps) {
         enableMouseEvents
       >
         {props.images.map((step, index) => (
-          <div key={step.label}>
+          <div 
+          key={`${step.label}-${index}`}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
