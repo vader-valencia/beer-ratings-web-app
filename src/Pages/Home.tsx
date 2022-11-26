@@ -44,10 +44,11 @@ const flexContainer = {
   padding: 0,
 };
 
-const homePage : QRCodeOptions = {path:'', altText: 'Home Page', fillColor:'blue', backgroundColor:'white'}
-const newItem : QRCodeOptions = {path:'new-item', altText:'New Item', fillColor:'red', backgroundColor:'white'}
-const rateItem : QRCodeOptions = {path:'rate-item', altText:'Rate Item', fillColor:'blue', backgroundColor:'white'}
-const QRArray = [homePage, newItem, rateItem]
+const homePage : QRCodeOptions = {path:'', altText: 'Home Page', fillColor:'black', backgroundColor:'white'}
+const newCategory : QRCodeOptions = {path:'new-category', altText:'New Category', fillColor:'gold', backgroundColor:'white'}
+const newItem : QRCodeOptions = {path:'new-item', altText:'New Item', fillColor:'black', backgroundColor:'white'}
+const rateItem : QRCodeOptions = {path:'rate-item', altText:'Rate Item', fillColor:'gold', backgroundColor:'white'}
+const QRArray = [homePage, newCategory, newItem, rateItem]
 
 const theme = createTheme();
 
@@ -63,7 +64,6 @@ export default function Homepage() {
         </Toolbar>
       </AppBar>
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: 'background.paper',
@@ -100,22 +100,17 @@ export default function Homepage() {
 
 
       </main>
-      {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
         <Typography
           variant="subtitle1"
           align="center"
           color="text.secondary"
           component="p"
         >
-          Designed by those who love good food to help others find good food!
+          Designed to help find good food, by those who love good food!
         </Typography>
         <Copyright />
       </Box>
-      {/* End footer */}
     </ThemeProvider>
   );
 }

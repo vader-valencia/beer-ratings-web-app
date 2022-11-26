@@ -5,7 +5,7 @@ import QRCodeQueryOptions from "../Models/QRCodeRequestQueryOptions";
 import Rating, { Ratings } from "../Models/Rating";
 import {Buffer} from 'buffer';
 import Category, { CategoryResponse } from "../Models/Category";
-import LabeledImage from "../Models/LabeledImage";
+import LabeledImage, { LabeledImageListResponse } from "../Models/LabeledImage";
 
 const ipAddress = 'localhost'; 
 
@@ -84,7 +84,7 @@ export function postNewCategory(newCategory: Category ) {
 export function getCategoryTopRated(numItems: number, categoryNameInUrl: string) {
     const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
 
-    const ratings = axios.get<LabeledImage[]>(getRatingsUrl).then(response => {return response.data});
+    const ratings = axios.get<LabeledImageListResponse>(getRatingsUrl).then(response => {return response.data});
 
     return ratings;
 
@@ -119,7 +119,7 @@ export function getCategoryTopRated(numItems: number, categoryNameInUrl: string)
 export function getAllTopRated(numItems: number) {
     const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
 
-    const ratings = axios.get<LabeledImage[]>(getRatingsUrl).then(response => {return response.data});
+    const ratings = axios.get<LabeledImageListResponse>(getRatingsUrl).then(response => {return response.data});
 
     return ratings;
 

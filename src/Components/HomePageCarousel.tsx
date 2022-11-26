@@ -2,11 +2,11 @@ import { CircularProgress, Typography } from "@mui/material";
 import React from "react";
 import { PropertySignature } from "typescript";
 import * as RatingsAPI from "../API/Ratings";
-import LabeledImage from "../Models/LabeledImage";
+import LabeledImage, { LabeledImageListResponse } from "../Models/LabeledImage";
 import Carousel from "./Carousel";
 
 interface CallableCarouselProps {
-    getFunction(...args: any[]): Promise<LabeledImage[]>;
+    getFunction(...args: any[]): Promise<LabeledImageListResponse>;
     getFunctionArguments: any[];
 }
 
@@ -18,9 +18,8 @@ export default function CallableCarousel(props: CallableCarouselProps) {
 
     React.useEffect(() => {
         props.getFunction(props.getFunctionArguments)
-            .then((response: LabeledImage[]) => {
-                console.log(response)
-                setImages(response)
+            .then((response: LabeledImageListResponse) => {
+                setImages(response.items)
                 setIsError(false)
             })
             .catch((error: { message: any; }) => {
@@ -28,8 +27,6 @@ export default function CallableCarousel(props: CallableCarouselProps) {
                 setErrorMessage(error.message)
             })
             .finally(() => {
-                console.log(images.length)
-                console.log(images.length === 0)
                 setIsLoading(false)
             })
     }, [])
