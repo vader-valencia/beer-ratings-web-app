@@ -1,14 +1,12 @@
-import React from 'react';
-import '../Styles/App.css';
-import logo from '../Images/logo.svg';
-import * as RatingsAPI from "../API/Ratings";
-import { Ratings } from '../Models/Rating';
-import { Box, Button, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
-import WebcamCapture from '../Components/WebcamCapture';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import { Button, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
+import React from 'react';
+import * as RatingsAPI from "../API/Ratings";
+import WebcamCapture from '../Components/WebcamCapture';
 import Category, { CategoryResponse } from '../Models/Category';
 import PostResponse from '../Models/PostResponse';
+import '../Styles/App.css';
   
 export default function NewItem() {
 

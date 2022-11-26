@@ -1,26 +1,16 @@
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { ListItem } from '@mui/material';
-import HomepageQRImg from '../Images/Beer_Ratings_Homepage.png';
-import NewBeerQRImg from '../Images/New_Beer.png';
-import RateABeerQRImg from '../Images/Rate_A_Beer.png';
-import QRSet from '../Components/QRSet';
-import Carousel from '../Components/Carousel';
-import { QRCodeOptions } from '../Models/QRCodeRequestQueryOptions';
-import LabeledImage from '../Models/LabeledImage';
-import HomePageCarousel from '../Components/HomePageCarousel';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import * as RatingsAPI from "../API/Ratings";
 import CallableCarousel from '../Components/HomePageCarousel';
+import QRSet from '../Components/QRSet';
+import HappyHour from "../Images/HappyHour.png";
+import { QRCodeOptions } from '../Models/QRCodeRequestQueryOptions';
 
 
 function Copyright() {
@@ -44,10 +34,10 @@ const flexContainer = {
   padding: 0,
 };
 
-const homePage : QRCodeOptions = {webPath:'', altText: 'Home Page', fillColor:'black', backgroundColor:'gold'}
-const newCategory : QRCodeOptions = {webPath:'new-category', altText:'New Category', fillColor:'gold', backgroundColor:'black'}
-const newItem : QRCodeOptions = {webPath:'new-item', altText:'New Item', fillColor:'black', backgroundColor:'gold'}
-const rateItem : QRCodeOptions = {webPath:'rate-item', altText:'Rate Item', fillColor:'gold', backgroundColor:'black'}
+const homePage: QRCodeOptions = { webPath: '', altText: 'Home Page', fillColor: 'black', backgroundColor: 'gold' }
+const newCategory: QRCodeOptions = { webPath: 'new-category', altText: 'New Category', fillColor: 'gold', backgroundColor: 'black' }
+const newItem: QRCodeOptions = { webPath: 'new-item', altText: 'New Item', fillColor: 'black', backgroundColor: 'gold' }
+const rateItem: QRCodeOptions = { webPath: 'rate-item', altText: 'Rate Item', fillColor: 'gold', backgroundColor: 'black' }
 const QRArray = [homePage, newCategory, newItem, rateItem]
 
 const theme = createTheme();
@@ -69,7 +59,7 @@ export default function Homepage() {
           }}
         >
           <Container maxWidth="sm">
-            <Typography
+            {/*<Typography
               component="h1"
               variant="h2"
               align="center"
@@ -78,17 +68,23 @@ export default function Homepage() {
             >
               Happy Hour!
             </Typography>
+            */}
+            <img src={HappyHour}
+              style={{
+                width: '70%',
+                height: '70%'
+              }} />
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Have fun, and enjoy responsibly!
             </Typography>
             <QRSet
-            portNumber={3000}
-            QRCodesToGenerate={QRArray}
+              portNumber={3000}
+              QRCodesToGenerate={QRArray}
             />
 
-            <CallableCarousel 
-            getFunction={RatingsAPI.getAllTopRated} 
-            getFunctionArguments={[10]} 
+            <CallableCarousel
+              getFunction={RatingsAPI.getAllTopRated}
+              getFunctionArguments={[10]}
             />
 
           </Container>

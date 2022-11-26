@@ -1,10 +1,10 @@
+import { Box, Button, MenuItem, TextField } from '@mui/material';
 import React from 'react';
-import '../Styles/App.css';
 import * as RatingsAPI from "../API/Ratings";
-import { Ratings } from '../Models/Rating';
-import { Box, TextField, MenuItem, Rating, Button } from '@mui/material';
-import { SkinnyItem, SkinnyItems } from '../Models/DrinkItem';
 import HoverRating from '../Components/HoverRating';
+import { SkinnyItem, SkinnyItems } from '../Models/DrinkItem';
+import { Ratings } from '../Models/Rating';
+import '../Styles/App.css';
 
 export default function RateItem() {
 
