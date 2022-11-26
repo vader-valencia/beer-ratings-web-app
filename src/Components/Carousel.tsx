@@ -15,8 +15,8 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 
 interface CarouselProps {
-    images : LabeledImage[];
-    isMobileStepperActive : boolean;
+  images: LabeledImage[];
+  isMobileStepperActive: boolean;
 }
 
 export default function Carousel(props: CarouselProps) {
@@ -37,7 +37,7 @@ export default function Carousel(props: CarouselProps) {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1, alignItems:'center' }}>
+    <Box sx={{ maxWidth: 400, flexGrow: 1, alignItems: 'center' }}>
       <Paper
         square
         elevation={0}
@@ -49,7 +49,7 @@ export default function Carousel(props: CarouselProps) {
           bgcolor: 'background.default',
         }}
       >
-        <Typography>{props.images[activeStep].label}</Typography>
+      {/*<Typography>{props.images[activeStep].label}</Typography>*/}
       </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -76,41 +76,41 @@ export default function Carousel(props: CarouselProps) {
           </div>
         ))}
       </AutoPlaySwipeableViews>
-      
+
       {
-      props.isMobileStepperActive ?
-      <MobileStepper
-        steps={maxSteps}
-        position="static"
-        activeStep={activeStep}
-        nextButton={
-          <Button
-            size="small"
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
-            Next
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
-          </Button>
-        }
-      />
-      : 
-      <></>
-    }
+        props.isMobileStepperActive ?
+          <MobileStepper
+            steps={maxSteps}
+            position="static"
+            activeStep={activeStep}
+            nextButton={
+              <Button
+                size="small"
+                onClick={handleNext}
+                disabled={activeStep === maxSteps - 1}
+              >
+                Next
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowLeft />
+                ) : (
+                  <KeyboardArrowRight />
+                )}
+              </Button>
+            }
+            backButton={
+              <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowRight />
+                ) : (
+                  <KeyboardArrowLeft />
+                )}
+                Back
+              </Button>
+            }
+          />
+          :
+          <></>
+      }
     </Box>
   );
 }

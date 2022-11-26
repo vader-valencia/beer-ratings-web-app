@@ -2,10 +2,6 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -115,7 +111,7 @@ export default function Homepage() {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Designed by those who love good food to help others find good food!
         </Typography>
         <Copyright />
       </Box>

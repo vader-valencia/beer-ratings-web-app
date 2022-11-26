@@ -22,6 +22,14 @@ export const getCreateItemQRCode = (portNum: number, queryOptions: QRCodeQueryOp
     return qrCode;
 }
 
+export const getCategories = () => {
+  const getCategoriesUrl = `http://${ipAddress}:8000/all-items`;
+
+  const categories = axios.get<Category[]>(getCategoriesUrl).then(response => {return response.data});
+
+  return categories;
+}
+
 export const getItems = () => {
     const getRatingsUrl = `http://${ipAddress}:8000/all-items`;
 

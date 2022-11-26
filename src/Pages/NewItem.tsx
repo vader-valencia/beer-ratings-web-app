@@ -3,16 +3,21 @@ import '../Styles/App.css';
 import logo from '../Images/logo.svg';
 import * as RatingsAPI from "../API/Ratings";
 import { Ratings } from '../Models/Rating';
-import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import WebcamCapture from '../Components/WebcamCapture';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { Container } from '@mui/system';
+import Category from '../Models/Category';
   
 export default function NewItem() {
 
+  const [category, setCategory] = React.useState<string>('');
+  const [categories, setCategories] = React.useState<Category[]>([]);
   const [name, setName] = React.useState<string>('');
   const [submittedBy, setSubmittedBy] = React.useState<string>('');
-  const [message, setMessage] = React.useState<Ratings|null>(null);
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
+  const [error, setIsError] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [image, setImage] = React.useState<string | null>(null);
   const [optedForPhoto, setOptedForPhoto] = React.useState<boolean>(false);
 
@@ -26,13 +31,17 @@ export default function NewItem() {
 
     RatingsAPI.postNewDrinkItem(newDrinkItem)
     .then((response) =>{
-      setMessage(response)
+      setErrorMessage(response)
     })
     .catch(error => console.log(error.message))
     .finally(() => {
       console.log('Experiment completed');
     });
   }
+
+  const handleCategoryChange = (event: SelectChangeEvent) => {
+    setCategory(event.target.value);
+  };
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -47,6 +56,18 @@ export default function NewItem() {
   }
 
   React.useEffect(()=>{
+    RatingsAPI.getCategories()
+    .then((response: Category[]) => {
+      setCategories(response)
+      setIsError(false)
+  })
+  .catch((error: { message: any; }) => {
+      setIsError(true)
+      setErrorMessage(error.message)
+  })
+  .finally(() => {
+      setIsLoading(false)
+  })
   },[])
 
   return (
@@ -59,6 +80,23 @@ export default function NewItem() {
       noValidate
       autoComplete="off"
     >
+
+        <Select
+          labelId="input-category"
+          id="demo-simple-select-standard"
+          value={category}
+          onChange={handleCategoryChange}
+          label="Age"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {
+            categories.map((category) =>(
+              <MenuItem value={category.name}>{category.name}</MenuItem>
+            ))
+          }
+        </Select>
 
         <TextField
           id="input-name"
@@ -95,7 +133,7 @@ export default function NewItem() {
         }
 
         <Button
-          disabled={name === '' || submittedBy === ''}
+          disabled={category === '' || name === '' || submittedBy === ''}
           onClick={() => {
             handleSubmit();
           }}
