@@ -93,7 +93,7 @@ export function postNewCategory(newCategory: Category ) {
 export function getCategoryTopRated(numItems: number, categoryNameInUrl: string) {
     const getRatingsUrl = `http://${ipAddress}:8000/items`;
 
-    const ratings = axios.get<LabeledImageListResponse>(getRatingsUrl).then(response => {return response.data});
+    const ratings = axios.get<DrinkItems>(getRatingsUrl).then(response => {return response.data});
 
     return ratings;
 
@@ -128,7 +128,7 @@ export function getCategoryTopRated(numItems: number, categoryNameInUrl: string)
 export function getAllTopRated(numItems: number) {
     const getRatingsUrl = `http://${ipAddress}:8000/items`;
 
-    const ratings = axios.get<LabeledImageListResponse>(getRatingsUrl).then(response => {return response.data});
+    const ratings = axios.get<DrinkItems>(getRatingsUrl).then(response => {return response.data});
 
     return ratings;
 

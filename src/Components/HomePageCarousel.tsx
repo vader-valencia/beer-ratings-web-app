@@ -2,11 +2,12 @@ import { CircularProgress, Typography } from "@mui/material";
 import React from "react";
 import { PropertySignature } from "typescript";
 import * as RatingsAPI from "../API/Ratings";
-import LabeledImage, { LabeledImageListResponse } from "../Models/LabeledImage";
+import DrinkItem, { DrinkItems } from "../Models/DrinkItem";
+import LabeledImage from "../Models/LabeledImage";
 import Carousel from "./Carousel";
 
 interface CallableCarouselProps {
-    getFunction(...args: any[]): Promise<LabeledImageListResponse>;
+    getFunction(...args: any[]): Promise<DrinkItems>;
     getFunctionArguments: any[];
 }
 
@@ -18,8 +19,16 @@ export default function CallableCarousel(props: CallableCarouselProps) {
 
     React.useEffect(() => {
         props.getFunction(props.getFunctionArguments)
-            .then((response: LabeledImageListResponse) => {
-                setImages(response.items)
+            .then((response: DrinkItems) => {
+                const labeledImageList : LabeledImage[] = 
+                    response.items.map((item: DrinkItem)=>{
+                        const labeledImage : LabeledImage = {
+                            label: item.name,
+                            imageSource: item.image ? item.image : ''
+                        }
+                        return labeledImage
+                    })
+                setImages(labeledImageList)
                 setIsError(false)
             })
             .catch((error: { message: any; }) => {
