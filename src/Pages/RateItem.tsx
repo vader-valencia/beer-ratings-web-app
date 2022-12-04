@@ -1,11 +1,10 @@
 import { LoadingButton } from '@mui/lab';
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
 import React from 'react';
-import { isConstructorDeclaration } from 'typescript';
 import * as RatingsAPI from "../API/Ratings";
 import HoverRating from '../Components/HoverRating';
 import Category, { CategoryResponse } from '../Models/Category';
-import DrinkItem, { DrinkItems, SkinnyItem } from '../Models/DrinkItem';
+import DrinkItem, { DrinkItems } from '../Models/DrinkItem';
 import { Ratings } from '../Models/Rating';
 import '../Styles/App.css';
 
@@ -61,7 +60,7 @@ export default function RateItem() {
       })
   }, [])
 
-  const getdisplayItemsForRatings = React.useMemo(() => {
+  React.useEffect(() => {
     if(categoryId){
       setDisplayItemsLoading(true)
     RatingsAPI.getItemsByCateogryId(categoryId as number)

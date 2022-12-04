@@ -1,16 +1,16 @@
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import DrinkItem, { DrinkItems, NewDrinkItem, SkinnyItem, SkinnyItems }  from "../Models/DrinkItem";
+import { Buffer } from 'buffer';
+import Category, { CategoryResponse } from "../Models/Category";
+import { DrinkItems, NewDrinkItem, SkinnyItems } from "../Models/DrinkItem";
 import QRCodeQueryOptions from "../Models/QRCodeRequestQueryOptions";
 import Rating, { Ratings } from "../Models/Rating";
-import {Buffer} from 'buffer';
-import Category, { CategoryResponse } from "../Models/Category";
-import LabeledImage, { LabeledImageListResponse } from "../Models/LabeledImage";
 
-const ipAddress = 'localhost'; 
+const ipAddress = window.location.hostname; 
+
+axios.defaults.baseURL = `https://${ipAddress}/3000`;
 
 export const getCreateItemQRCode = (portNum: number, queryOptions: QRCodeQueryOptions) => {
-    const getQRCodUrl = `http://${ipAddress}:8000/${portNum}/qr-code`
+    const getQRCodUrl = `https://${ipAddress}:8000/${portNum}/qr-code`
     const qrCode = axios.get(getQRCodUrl, { params: queryOptions, responseType:'arraybuffer' })
     .then((response) => {
         return 'data:image/png;base64,'+Buffer.from(response.data, 'base64').toString('base64');
@@ -19,7 +19,7 @@ export const getCreateItemQRCode = (portNum: number, queryOptions: QRCodeQueryOp
 }
 
 export const getCategories = () => {
-  const getCategoriesUrl = `http://${ipAddress}:8000/categories`;
+  const getCategoriesUrl = `https://${ipAddress}:8000/categories`;
 
   const categories = axios.get<CategoryResponse>(getCategoriesUrl).then((response) => {
     return response.data});
@@ -27,7 +27,7 @@ export const getCategories = () => {
 }
 
 export const getItems = () => {
-    const getRatingsUrl = `http://${ipAddress}:8000/items`;
+    const getRatingsUrl = `https://${ipAddress}:8000/items`;
 
     const ratings = axios.get<Ratings>(getRatingsUrl).then(response => {return response.data});
 
@@ -35,7 +35,7 @@ export const getItems = () => {
 }
 
 export const getItemsByCateogryId = (categoryId: number) => {
-  const getItemsByCateogryIdUrl = `http://${ipAddress}:8000/${categoryId}/items`;
+  const getItemsByCateogryIdUrl = `https://${ipAddress}:8000/${categoryId}/items`;
 
   const ratings = axios.get<DrinkItems>(getItemsByCateogryIdUrl).then(response => {return response.data});
 
@@ -43,7 +43,7 @@ export const getItemsByCateogryId = (categoryId: number) => {
 }
 
 export const getItemsSkinny = () => {
-    const getRatingsUrl = `http://${ipAddress}:8000/all-items-skinny`;
+    const getRatingsUrl = `https://${ipAddress}:8000/all-items-skinny`;
 
     const ratings = axios.get<SkinnyItems>(getRatingsUrl).then(response => {return response.data});
 
@@ -51,7 +51,7 @@ export const getItemsSkinny = () => {
 }
 
 export function getItemById (id: number) {
-    const getRatingByIdUrl = `http://${ipAddress}:8000/items/${id}`;
+    const getRatingByIdUrl = `https://${ipAddress}:8000/items/${id}`;
 
     axios.get(getRatingByIdUrl).then((response) => {
         return response.data;
@@ -59,8 +59,9 @@ export function getItemById (id: number) {
 }
 
 export function postNewItem (item: NewDrinkItem) {
-  console.log(item)
-    const postItemUrl = `http://${ipAddress}:8000/items/`;
+    const postItemUrl = `https://${ipAddress}:8000/items/`;
+    console.log(postItemUrl)
+
 
     const postResponse = axios.post(postItemUrl, item).then((response) => {
         return response.data;
@@ -70,7 +71,7 @@ export function postNewItem (item: NewDrinkItem) {
 }
 
 export function postRating (itemId: number, rating: Rating) {
-    const postRatingUrl = `http://${ipAddress}:8000/ratings/${itemId}`;
+    const postRatingUrl = `https://${ipAddress}:8000/ratings/${itemId}`;
 
     const postResponse = axios.post(postRatingUrl, rating).then((response) => {
         return response.data;
@@ -81,7 +82,8 @@ export function postRating (itemId: number, rating: Rating) {
 }
 
 export function postNewCategory(newCategory: Category ) {
-    const postCategoryUrl = `http://${ipAddress}:8000/categories/`;
+    const postCategoryUrl = `https://${ipAddress}:8000/categories/`;
+    console.log(postCategoryUrl)
 
     const postResponse = axios.post(postCategoryUrl, newCategory).then((response) => {
         return response.data;
@@ -90,73 +92,20 @@ export function postNewCategory(newCategory: Category ) {
   return postResponse;
 }
 
-export function getCategoryTopRated(numItems: number, categoryNameInUrl: string) {
-    const getRatingsUrl = `http://${ipAddress}:8000/items`;
+export function getCategoryTopRated(args : {numItems: number, categoryNameInUrl: string}) {
+    const getRatingsUrl = `https://${ipAddress}:8000/${args.categoryNameInUrl}/items`;
 
     const ratings = axios.get<DrinkItems>(getRatingsUrl).then(response => {return response.data});
 
     return ratings;
 
-    /*
-    const images : LabeledImage[] = [
-        {
-          label: 'San Francisco – Oakland Bay Bridge, United States',
-          imageSource:
-            'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-        },
-        {
-          label: 'Bird',
-          imageSource:
-            'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-        },
-        {
-          label: 'Bali, Indonesia',
-          imageSource:
-            'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
-        },
-        {
-          label: 'Goč, Serbia',
-          imageSource:
-            'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-        },
-      ];
-
-    return images;
-    */
 }
 
 export function getAllTopRated(numItems: number) {
-    const getRatingsUrl = `http://${ipAddress}:8000/items`;
+    const getRatingsUrl = `https://${ipAddress}:8000/items`;
 
     const ratings = axios.get<DrinkItems>(getRatingsUrl).then(response => {return response.data});
 
     return ratings;
-
-    /*
-    const images : LabeledImage[] = [
-        {
-          label: 'San Francisco – Oakland Bay Bridge, United States',
-          imageSource:
-            'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-        },
-        {
-          label: 'Bird',
-          imageSource:
-            'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-        },
-        {
-          label: 'Bali, Indonesia',
-          imageSource:
-            'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
-        },
-        {
-          label: 'Goč, Serbia',
-          imageSource:
-            'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-        },
-      ];
-
-    return images;
-    */
 }
 

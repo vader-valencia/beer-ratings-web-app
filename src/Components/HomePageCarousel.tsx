@@ -8,7 +8,7 @@ import Carousel from "./Carousel";
 
 interface CallableCarouselProps {
     getFunction(...args: any[]): Promise<DrinkItems>;
-    getFunctionArguments: any[];
+    getFunctionArguments: any;
 }
 
 export default function CallableCarousel(props: CallableCarouselProps) {

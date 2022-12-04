@@ -2,6 +2,7 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import React from 'react';
+import Webcam from 'react-webcam';
 import * as RatingsAPI from "../API/Ratings";
 import WebcamCapture from '../Components/WebcamCapture';
 import Category, { CategoryResponse } from '../Models/Category';
@@ -70,14 +71,15 @@ export default function NewItem() {
   }
 
   React.useEffect(()=>{
+    console.log('starting getcatgories')
     RatingsAPI.getCategories()
     .then((response: CategoryResponse) => {
       setCategories(response.items)
       setisLoadingError(false)
   })
-  .catch((error: { message: any; }) => {
+  .catch((error: any) => {
       setisLoadingError(true)
-      setErrorMessage(error.message)
+      setErrorMessage(error.request + error.toString() + error.response.toString())
   })
   .finally(() => {
       setIsLoading(false)

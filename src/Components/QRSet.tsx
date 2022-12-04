@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import * as RatingsApi from "../API/Ratings";
 import { QRCodeOptions } from "../Models/QRCodeRequestQueryOptions";
@@ -43,25 +43,19 @@ export default function QRSet(props: QRSetProps) {
     }, [])
 
     return (
-        <Stack
-            sx={{ pt: 4 }}
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-        >
-            {
+        <Box sx={{ width: '100%' }}>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        {
                 QRArray.map((qr) => {
                     return (
-                        <Container
-                            key={qr.altText}
-                        >
+                        <Grid xs={6} key={qr.altText}>
                             <img src={qr.image} className="App-logo" />
                             <Typography align={'center'}>{qr.altText}</Typography>
-                        </Container>
+                        </Grid>
                     )
                 })
             }
-
-        </Stack>
+        </Grid>
+        </Box>
     )
 }

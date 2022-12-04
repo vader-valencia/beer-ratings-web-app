@@ -18,7 +18,7 @@ export default function Category() {
 
     React.useEffect(() =>{
         setDisplayString(`${categoryName} + Top ${numitems}!` )
-    },[])
+    },[categoryName])
 
     return (
         <Container>
@@ -28,21 +28,8 @@ export default function Category() {
             
             <CallableCarousel
                 getFunction={RatingsAPI.getCategoryTopRated}
-                getFunctionArguments={[10,categoryName]}
+                getFunctionArguments={{numItems: 10, categoryNameInUrl: categoryName}}
             />
         </Container>
     )
-    /*
-            <div>
-        {
-            isLoading ?
-            <CircularProgress />
-                :
-            <Carousel 
-            images={images} 
-            isMobileStepperActive={true}        
-            />
-        }
-        </div>
-    */
 }

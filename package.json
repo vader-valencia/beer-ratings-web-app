@@ -22,6 +22,7 @@
     "os": "^0.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-https-redirect": "^1.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-swipeable-views": "^0.14.0",
@@ -54,8 +55,10 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "https://127.0.0.1:3000",
   "devDependencies": {
     "@types/react-swipeable-views": "^0.13.1",
-    "@types/react-swipeable-views-utils": "^0.13.4"
+    "@types/react-swipeable-views-utils": "^0.13.4",
+    "@types/webpack-env": "^1.18.0"
   }
 }

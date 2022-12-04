@@ -7,6 +7,7 @@ import React from "react";
 import Category from "./Pages/Category";
 import NewCategory from "./Pages/NewCategory";
 
+
 export default function App() {
 
   return (
