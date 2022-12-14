@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import Carousel from "../Components/Carousel";
 import * as RatingsAPI from "../API/Ratings";
 import LabeledImage from "../Models/LabeledImage";
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import CallableCarousel from "../Components/HomePageCarousel";
 import { Container } from "@mui/system";
+import HeaderBar from "../Components/HeaderBar";
+import Footer from "../Components/Footer";
 
 
 export default function Category() {
@@ -21,6 +23,18 @@ export default function Category() {
     },[categoryName])
 
     return (
+        <>
+        <HeaderBar/>
+
+        <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                >
+
+            <Grid item xs={3}>
         <Container>
             <Typography>
             {displayString}
@@ -31,5 +45,10 @@ export default function Category() {
                 getFunctionArguments={{numItems: 10, categoryNameInUrl: categoryName}}
             />
         </Container>
+        </Grid>
+        </Grid>
+        <Footer/>
+        </>
+
     )
 }

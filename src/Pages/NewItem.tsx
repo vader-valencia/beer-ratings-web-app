@@ -1,9 +1,11 @@
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import React from 'react';
 import Webcam from 'react-webcam';
 import * as RatingsAPI from "../API/Ratings";
+import Footer from '../Components/Footer';
+import HeaderBar from '../Components/HeaderBar';
 import WebcamCapture from '../Components/WebcamCapture';
 import Category, { CategoryResponse } from '../Models/Category';
 import PostResponse from '../Models/PostResponse';
@@ -87,6 +89,9 @@ export default function NewItem() {
   },[])
 
   return (
+    <>
+    <HeaderBar/>
+    {
     isLoading ?
     <></>
     :
@@ -95,6 +100,15 @@ export default function NewItem() {
         {errorMessage}
       </Typography>
       :
+  <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      >
+
+  <Grid item xs={3}>
     <Stack
       component="form"
       sx={{
@@ -164,12 +178,22 @@ export default function NewItem() {
           setImage={setImage}
           /> 
           : 
-          <Container>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            >
+            <Grid item xs={3}>
             <Button onClick={() => setOptedForPhoto(true)}>
               <PhotoCameraIcon/>
             </Button>
-            <Typography>Add a photo!</Typography>
-          </Container>
+            </Grid>
+            <Grid item xs = {3}>
+              <Typography>Add a photo!</Typography>
+            </Grid>
+          </Grid>
         }
 
         <Button
@@ -192,7 +216,12 @@ export default function NewItem() {
         }
 
         </Stack>
+        </Grid>
+        </Grid>
     )
+      }
+    <Footer/>
+        </>
   );
 
 }

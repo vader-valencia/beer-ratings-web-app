@@ -1,6 +1,8 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Container, CssBaseline, Grid, Stack, TextField } from "@mui/material";
 import React from "react";
 import * as RatingsAPI from "../API/Ratings";
+import Footer from "../Components/Footer";
+import HeaderBar from "../Components/HeaderBar";
 
 
 export default function NewCategory() {
@@ -38,45 +40,65 @@ export default function NewCategory() {
     }
 
     return (
-        <Stack
-            component="form"
-            sx={{
-                width: '25ch',
-            }}
-            spacing={2}
-            noValidate
-            autoComplete="off"
-        >
+        <>
+            <HeaderBar />
 
-            <TextField
-                id="input-name"
-                label="Category Name"
-                multiline
-                required
-                maxRows={4}
-                value={name}
-                onChange={handleNameChange}
-            />
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                >
 
-            <TextField
-                id="input-submitted-by"
-                label="Submitted By"
-                multiline
-                required
-                maxRows={4}
-                value={submittedBy}
-                onChange={handleSubmittedByChange}
-            />
-
-            <Button
-                disabled={name === '' || submittedBy === ''}
-                onClick={() => {
-                    handleSubmit();
+            <Grid item xs={3}>
+            <Stack
+                component="form"
+                sx={{
+                    width: '25ch',
                 }}
+                spacing={2}
+                noValidate
+                autoComplete="off"
             >
-                Submit
-            </Button>
 
-        </Stack>
+                <TextField
+                    id="input-name"
+                    label="Category Name"
+                    multiline
+                    required
+                    maxRows={4}
+                    value={name}
+                    onChange={handleNameChange}
+                />
+
+                <TextField
+                    id="input-submitted-by"
+                    label="Submitted By"
+                    multiline
+                    required
+                    maxRows={4}
+                    value={submittedBy}
+                    onChange={handleSubmittedByChange}
+                />
+
+                <Button
+                    disabled={name === '' || submittedBy === ''}
+                    onClick={() => {
+                        handleSubmit();
+                    }}
+                >
+                    Submit
+                </Button>
+
+            </Stack>
+
+            </Grid>   
+   
+            </Grid> 
+
+
+            <Footer/>
+        </>
     );
 }

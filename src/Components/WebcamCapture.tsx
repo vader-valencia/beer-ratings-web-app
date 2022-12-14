@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 //import './cameraStyles.css'
 import Webcam from "react-webcam";
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
   width: 220,
@@ -29,28 +29,42 @@ const webcamRef = React.useRef<Webcam>(null);
 
   return (
     <div className="webcam-container">
+      <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            >
       {props.image === null
-      ?<Webcam
-        audio={false}
-        height={200}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        width={220}
-        videoConstraints={videoConstraints}
-        />
+      ? <Grid item>
+          <Webcam
+          audio={false}
+          height={200}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          width={220}
+          videoConstraints={videoConstraints}
+          />
+        </Grid>
       :
       <img src={props.image}/>}
       {props.image === null ?
-      <Button 
-        onClick={(e)=>{e.preventDefault();capture();}}>
-            Capture
-        </Button>
+        <Grid item>
+          <Button 
+          onClick={(e)=>{e.preventDefault();capture();}}>
+              Capture
+          </Button>
+        </Grid>
         : 
-        <Button 
-        onClick={(e)=>{e.preventDefault();props.setImage(null);}}>
-            Retake
-        </Button>
+        <Grid item>
+          <Button 
+          onClick={(e)=>{e.preventDefault();props.setImage(null);}}>
+              Retake
+          </Button>
+        </Grid>
         }
+        </Grid>
     </div>
   );
 };

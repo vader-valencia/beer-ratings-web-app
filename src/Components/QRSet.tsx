@@ -43,12 +43,16 @@ export default function QRSet(props: QRSetProps) {
     }, [])
 
     return (
-        <Box sx={{ width: '100%' }}>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid 
+        container 
+        rowSpacing={1} 
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        alignItems="center"
+        justifyContent="center">
         {
                 QRArray.map((qr) => {
                     return (
-                        <Grid xs={6} key={qr.altText}>
+                        <Grid item key={qr.altText}>
                             <img src={qr.image} className="App-logo" />
                             <Typography align={'center'}>{qr.altText}</Typography>
                         </Grid>
@@ -56,6 +60,5 @@ export default function QRSet(props: QRSetProps) {
                 })
             }
         </Grid>
-        </Box>
     )
 }

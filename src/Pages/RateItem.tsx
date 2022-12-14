@@ -1,12 +1,14 @@
 import { LoadingButton } from '@mui/lab';
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material';
 import React from 'react';
 import * as RatingsAPI from "../API/Ratings";
+import HeaderBar from '../Components/HeaderBar';
 import HoverRating from '../Components/HoverRating';
 import Category, { CategoryResponse } from '../Models/Category';
 import DrinkItem, { DrinkItems } from '../Models/DrinkItem';
 import { Ratings } from '../Models/Rating';
 import '../Styles/App.css';
+import Footer from "../Components/Footer";
 
 export default function RateItem() {
 
@@ -94,6 +96,17 @@ export default function RateItem() {
   }
 
   return (
+    <>
+    <HeaderBar/>
+    <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                >
+
+            <Grid item xs={3}>
     <Stack
       component="form"
       sx={{
@@ -180,5 +193,9 @@ export default function RateItem() {
           )
         }
     </Stack>
+    </Grid>
+    </Grid>
+    <Footer/>
+    </>
   );
 }
