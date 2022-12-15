@@ -63,20 +63,20 @@ export default function RateItem() {
   }, [])
 
   React.useEffect(() => {
-    if(categoryId){
+    if(categoryId !== null){
       setDisplayItemsLoading(true)
-    RatingsAPI.getItemsByCateogryId(categoryId as number)
-      .then((response: DrinkItems) => {
-        setDisplayItems(response.items)
-        setDisplayItemsLoadingError(false)
-      })
-      .catch(error => {
-        setDisplayItemsLoadingErrorMessage(error.message)
-        setDisplayItemsLoadingError(true)
-      })
-      .finally(() => {
-        setDisplayItemsLoading(false)
-    })
+      RatingsAPI.getItemsByCateogryId(categoryId as number)
+        .then((response: DrinkItems) => {
+          setDisplayItems(response.items)
+          setDisplayItemsLoadingError(false)
+        })
+        .catch(error => {
+          setDisplayItemsLoadingErrorMessage(error.message)
+          setDisplayItemsLoadingError(true)
+        })
+        .finally(() => {
+          setDisplayItemsLoading(false)
+        })
   }
   }, [categoryId])
 
@@ -157,7 +157,7 @@ export default function RateItem() {
           (<>
 
     <FormControl>
-        <InputLabel id="input-category-select-label">Category</InputLabel>
+        <InputLabel id="input-category-select-label">Item</InputLabel>
         <Select
               id="select-item"
               label="Items"

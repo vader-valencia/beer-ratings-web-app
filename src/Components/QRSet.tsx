@@ -4,6 +4,7 @@ import * as RatingsApi from "../API/Ratings";
 import { QRCodeOptions } from "../Models/QRCodeRequestQueryOptions";
 import { Container } from '@mui/system';
 import QRCodeRequestQueryOptions from "../Models/QRCodeRequestQueryOptions";
+import {BrowserRouter as Router, Link} from 'react-router-dom';
 
 interface QRSetProps {
     portNumber: number;
@@ -13,6 +14,7 @@ interface QRSetProps {
 interface QRResults {
     image: string;
     altText: string;
+    webPath: string;
 }
 
 export default function QRSet(props: QRSetProps) {
@@ -31,7 +33,8 @@ export default function QRSet(props: QRSetProps) {
                     setQRArray(oldArr => [...oldArr,
                     {
                         image: response.toString(),
-                        altText: qrOptions.altText
+                        altText: qrOptions.altText,
+                        webPath: qrOptions.webPath
                     }
                     ]);
                 })
@@ -53,8 +56,18 @@ export default function QRSet(props: QRSetProps) {
                 QRArray.map((qr) => {
                     return (
                         <Grid item key={qr.altText}>
-                            <img src={qr.image} className="App-logo" />
-                            <Typography align={'center'}>{qr.altText}</Typography>
+                            <Link to={qr.webPath}>
+                                <Box
+                                    component="img"
+                                    sx={{
+                                    height: 150,
+                                    width: 150,
+                                    }}
+                                    alt={qr.altText}
+                                    src={qr.image}
+                                />
+                                <Typography align={'center'}>{qr.altText}</Typography>
+                            </Link>
                         </Grid>
                     )
                 })
