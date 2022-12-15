@@ -7,3 +7,7 @@ export default interface Category{
 export interface CategoryResponse{
     items: Category[]
 }
+
+export interface CategoryIdResponse{
+    id: number
+}

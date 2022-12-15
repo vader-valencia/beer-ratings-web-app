@@ -8,6 +8,7 @@ import CallableCarousel from "../Components/HomePageCarousel";
 import { Container } from "@mui/system";
 import HeaderBar from "../Components/HeaderBar";
 import Footer from "../Components/Footer";
+import { CategoryIdResponse } from "../Models/Category";
 
 
 export default function Category() {
@@ -16,10 +17,31 @@ export default function Category() {
     const [images, setImages] = React.useState<LabeledImage[]>([])
     const [message, setMessage] = React.useState<string>('')
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
+    const [isLoadingError, setIsLoadingError] = React.useState<boolean>(false)
+    const [categoryId, setCategoryId] = React.useState<number | null>(null)
     const {categoryName} = useParams<{categoryName: string}>()
 
     React.useEffect(() =>{
         setDisplayString(`${categoryName} + Top ${numitems}!` )
+        
+    },[categoryName])
+
+    React.useEffect(()=>{
+        if(categoryName !== null){
+        setIsLoading(true)
+        RatingsAPI.getCategoryIdByCategoryNames(categoryName as string)
+        .then((response: CategoryIdResponse) => {
+            setCategoryId(response.id)
+            setIsLoadingError(false)
+        })
+        .catch((error: any) => {
+            setIsLoadingError(true)
+            setMessage(error.request + error.toString() + error.response.toString())
+        })
+        .finally(() => {
+            setIsLoading(false)
+        })
+    }
     },[categoryName])
 
     return (
@@ -42,7 +64,7 @@ export default function Category() {
             
             <CallableCarousel
                 getFunction={RatingsAPI.getCategoryTopRated}
-                getFunctionArguments={{numItems: 10, categoryNameInUrl: categoryName}}
+                getFunctionArguments={{numItems: 10, categoryId: categoryId}}
             />
         </Container>
         </Grid>

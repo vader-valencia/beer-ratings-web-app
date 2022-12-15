@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Buffer } from 'buffer';
-import Category, { CategoryResponse } from "../Models/Category";
+import Category, { CategoryIdResponse, CategoryResponse } from "../Models/Category";
 import { DrinkItems, NewDrinkItem, SkinnyItems } from "../Models/DrinkItem";
 import QRCodeQueryOptions from "../Models/QRCodeRequestQueryOptions";
 import Rating, { Ratings } from "../Models/Rating";
@@ -92,8 +92,16 @@ export function postNewCategory(newCategory: Category ) {
   return postResponse;
 }
 
-export function getCategoryTopRated(args : {numItems: number, categoryNameInUrl: string}) {
-    const getRatingsUrl = `https://${ipAddress}:8000/${args.categoryNameInUrl}/items`;
+export function getCategoryIdByCategoryNames(categoryName: string){
+  const getCategoryIdByCategoryNamesUrl = `https://${ipAddress}:8000/categories/names/${categoryName}`;
+
+  const ratings = axios.get<CategoryIdResponse>(getCategoryIdByCategoryNamesUrl).then(response => {return response.data});
+
+  return ratings;
+}
+
+export function getCategoryTopRated(args : {numItems: number, categoryId: number}) {
+    const getRatingsUrl = `https://${ipAddress}:8000/${args.categoryId}/items`;
 
     const ratings = axios.get<DrinkItems>(getRatingsUrl).then(response => {return response.data});
 
