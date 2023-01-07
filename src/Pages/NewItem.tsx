@@ -2,15 +2,17 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import * as RatingsAPI from "../API/Ratings";
 import Footer from '../Components/Footer';
 import HeaderBar from '../Components/HeaderBar';
+import LoadingBackDrop from '../Components/LoadingBackDrop';
 import WebcamCapture from '../Components/WebcamCapture';
 import Category, { CategoryResponse } from '../Models/Category';
 import PostResponse from '../Models/PostResponse';
 import '../Styles/App.css';
-  
+
 export default function NewItem() {
 
   const [categoryId, setCategoryId] = React.useState<number>(-1);
@@ -27,10 +29,12 @@ export default function NewItem() {
   const [image, setImage] = React.useState<string | null>(null);
   const [optedForPhoto, setOptedForPhoto] = React.useState<boolean>(false);
   const [description, setDescription] = React.useState<string>('');
+  const [backDropIsOpen, setBackDropIsOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const createNewItem = () => {
 
-    const newItem =     {
+    const newItem = {
       categoryId: categoryId,
       name: name,
       description: description,
@@ -39,17 +43,20 @@ export default function NewItem() {
     }
 
     setIsSubmitLoading(true)
+    setBackDropIsOpen(true)
     RatingsAPI.postNewItem(newItem)
-    .then((response : PostResponse) =>{
-      setSubmitSuccessMessage(response.successMessage)
-    })
-    .catch(error => {
-      setSubmitErrorMessage(error.message)
-      setIsSubmitError(true)
-    })
-    .finally(() => {
-      setIsSubmitLoading(false)
-    });
+      .then((response: PostResponse) => {
+        setSubmitSuccessMessage(response.successMessage)
+        setIsSubmitLoading(false)
+        setTimeout(() => navigate(`/`), 2000);
+      })
+      .catch(error => {
+        setSubmitErrorMessage(error.message)
+        setIsSubmitError(true)
+      })
+      .finally(() => {
+        setIsSubmitLoading(false)
+      });
   }
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
@@ -72,156 +79,157 @@ export default function NewItem() {
     createNewItem()
   }
 
-  React.useEffect(()=>{
-    console.log('starting getcatgories')
+  React.useEffect(() => {
     RatingsAPI.getCategories()
-    .then((response: CategoryResponse) => {
-      setCategories(response.items)
-      setisLoadingError(false)
-  })
-  .catch((error: any) => {
-      setisLoadingError(true)
-      setErrorMessage(error.request + error.toString() + error.response.toString())
-  })
-  .finally(() => {
-      setIsLoading(false)
-  })
-  },[])
+      .then((response: CategoryResponse) => {
+        setCategories(response.items)
+        setisLoadingError(false)
+      })
+      .catch((error: any) => {
+        setisLoadingError(true)
+        setErrorMessage(error.request + error.toString() + error.response.toString())
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [])
 
   return (
     <>
-    <HeaderBar/>
-    {
-    isLoading ?
-    <></>
-    :
-    (isLoadingError ? 
-      <Typography>
-        {errorMessage}
-      </Typography>
-      :
-  <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      >
-
-  <Grid item xs={3}>
-    <Stack
-      component="form"
-      sx={{
-        width: '25ch',
-      }}
-      spacing={2}
-      noValidate
-      autoComplete="off"
-    >
-
-    <FormControl>
-    <InputLabel id="input-category-select-label">Category</InputLabel>
-        <Select
-          labelId="input-category"
-          id="demo-simple-select-standard"
-          value={categoryId.toString()}
-          onChange={handleCategoryChange}
-          label="Category"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {
-            categories.map((category) =>(
-              <MenuItem 
-                value={category.id}
-                key={category.id+'-key'}
-              >{category.name}</MenuItem>
-            ))
-          }
-        </Select>
-      </FormControl>
-
-        <TextField
-          id="input-name"
-          label="Item Name"
-          multiline
-          required
-          maxRows={4}
-          value={name}
-          onChange={handleNameChange}
-        />
-
-        <TextField
-          id="input-description"
-          label="Description"
-          multiline
-          required
-          maxRows={4}
-          value={description}
-          onChange={handleDescriptionChange}
-        />
-
-        <TextField
-          id="input-submitted-by"
-          label="Submitted By"
-          multiline
-          required
-          maxRows={4}
-          value={submittedBy}
-          onChange={handleSubmittedByChange}
-        />
-
-        {optedForPhoto ?  
-          <WebcamCapture
-          image={image}
-          setImage={setImage}
-          /> 
-          : 
-          <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            >
-            <Grid item xs={3}>
-            <Button onClick={() => setOptedForPhoto(true)}>
-              <PhotoCameraIcon/>
-            </Button>
-            </Grid>
-            <Grid item xs = {3}>
-              <Typography>Add a photo!</Typography>
-            </Grid>
-          </Grid>
-        }
-
-        <Button
-          disabled={categoryId === null || name === '' || submittedBy === '' || description === ''}
-          onClick={() => {
-            handleSubmit();
-          }}
-          >
-          Submit
-        </Button>
-
-        {
-          isSubmitLoading ? 
+      <HeaderBar />
+      {
+        isLoading ?
           <></>
+          :
+          (isLoadingError ?
+            <Typography>
+              {errorMessage}
+            </Typography>
             :
-            isSubmitError ?
-            <Typography>{submitErrorMessage}</Typography>
-            :
-            <Typography>{submitSuccessMessage}</Typography>
-        }
+            <Grid
+              container
+              spacing={0}
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
 
-        </Stack>
-        </Grid>
-        </Grid>
-    )
+              <Grid item xs={3}>
+                <Stack
+                  component="form"
+                  sx={{
+                    width: '25ch',
+                  }}
+                  spacing={2}
+                  noValidate
+                  autoComplete="off"
+                >
+
+                  <FormControl>
+                    <InputLabel id="input-category-select-label">Category</InputLabel>
+                    <Select
+                      labelId="input-category"
+                      id="demo-simple-select-standard"
+                      value={categoryId.toString()}
+                      onChange={handleCategoryChange}
+                      label="Category"
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {
+                        categories.map((category) => (
+                          <MenuItem
+                            value={category.id}
+                            key={category.id + '-key'}
+                          >{category.name}</MenuItem>
+                        ))
+                      }
+                    </Select>
+                  </FormControl>
+
+                  <TextField
+                    id="input-name"
+                    label="Item Name"
+                    multiline
+                    required
+                    maxRows={4}
+                    value={name}
+                    onChange={handleNameChange}
+                  />
+
+                  <TextField
+                    id="input-description"
+                    label="Description"
+                    multiline
+                    required
+                    maxRows={4}
+                    value={description}
+                    onChange={handleDescriptionChange}
+                  />
+
+                  <TextField
+                    id="input-submitted-by"
+                    label="Submitted By"
+                    multiline
+                    required
+                    maxRows={4}
+                    value={submittedBy}
+                    onChange={handleSubmittedByChange}
+                  />
+
+                  {optedForPhoto ?
+                    <WebcamCapture
+                      image={image}
+                      setImage={setImage}
+                    />
+                    :
+                    <Grid
+                      container
+                      spacing={0}
+                      direction="column"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Grid item xs={3}>
+                        <Button
+                          variant="contained"
+                          onClick={() => setOptedForPhoto(true)}>
+                          <PhotoCameraIcon />
+                        </Button>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Typography>Add a photo!</Typography>
+                      </Grid>
+                    </Grid>
+                  }
+
+                  <Button
+                    variant="contained"
+                    disabled={categoryId === null || name === '' || submittedBy === '' || description === ''}
+                    onClick={() => {
+                      handleSubmit();
+                    }}
+                  >
+                    Submit
+                  </Button>
+
+                  <LoadingBackDrop
+                    backDropIsOpen={backDropIsOpen}
+                    setBackDropIsOpen={setBackDropIsOpen}
+                    isSubmitting={isSubmitLoading}
+                    isSubmitError={isSubmitError}
+                    errorMessage={submitErrorMessage}
+                    successMessage={submitSuccessMessage}
+                  />
+
+                </Stack>
+              </Grid>
+            </Grid>
+          )
       }
-    <Footer/>
-        </>
+      <Footer />
+    </>
   );
 
 }

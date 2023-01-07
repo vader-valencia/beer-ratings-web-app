@@ -9,67 +9,63 @@ import { Container } from "@mui/system";
 import HeaderBar from "../Components/HeaderBar";
 import Footer from "../Components/Footer";
 import { CategoryIdResponse } from "../Models/Category";
+import { DrinkItems } from "../Models/DrinkItem";
 
 
 export default function Category() {
     const numitems = 10;
-    const [displayString, setDisplayString] = React.useState<string>('') 
+    const [displayString, setDisplayString] = React.useState<string>('')
     const [images, setImages] = React.useState<LabeledImage[]>([])
     const [message, setMessage] = React.useState<string>('')
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
     const [isLoadingError, setIsLoadingError] = React.useState<boolean>(false)
-    const [categoryId, setCategoryId] = React.useState<number | null>(null)
-    const {categoryName} = useParams<{categoryName: string}>()
+    const { id } = useParams<{ id: string }>()
+    const categoryId = parseInt(id as string)
 
-    React.useEffect(() =>{
-        setDisplayString(`${categoryName} + Top ${numitems}!` )
-        
-    },[categoryName])
-
-    React.useEffect(()=>{
-        if(categoryName !== null){
-        setIsLoading(true)
-        RatingsAPI.getCategoryIdByCategoryNames(categoryName as string)
-        .then((response: CategoryIdResponse) => {
-            setCategoryId(response.id)
-            setIsLoadingError(false)
-        })
-        .catch((error: any) => {
-            setIsLoadingError(true)
-            setMessage(error.request + error.toString() + error.response.toString())
-        })
-        .finally(() => {
-            setIsLoading(false)
-        })
-    }
-    },[categoryName])
+    React.useEffect(() => {
+        if (categoryId !== null) {
+            setIsLoading(true)
+            RatingsAPI.getCategoryById(categoryId)
+                .then((response) => {
+                    setDisplayString(`${response.name} + Top ${numitems}!`)
+                    setIsLoadingError(false)
+                })
+                .catch((error: any) => {
+                    setIsLoadingError(true)
+                    setMessage(error.request + error.toString() + error.response.toString())
+                })
+                .finally(() => {
+                    setIsLoading(false)
+                })
+        }
+    }, [categoryId])
 
     return (
         <>
-        <HeaderBar/>
+            <HeaderBar />
 
-        <Grid
+            <Grid
                 container
                 spacing={0}
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                >
+            >
 
-            <Grid item xs={3}>
-        <Container>
-            <Typography>
-            {displayString}
-            </Typography>
-            
-            <CallableCarousel
-                getFunction={RatingsAPI.getCategoryTopRated}
-                getFunctionArguments={{numItems: 10, categoryId: categoryId}}
-            />
-        </Container>
-        </Grid>
-        </Grid>
-        <Footer/>
+                <Grid item xs={3}>
+                    <Container>
+                        <Typography>
+                            {displayString}
+                        </Typography>
+
+                        <CallableCarousel
+                            getFunction={RatingsAPI.getCategoryTopRated}
+                            getFunctionArguments={{ numItems: 10, categoryId: categoryId }}
+                        />
+                    </Container>
+                </Grid>
+            </Grid>
+            <Footer />
         </>
 
     )

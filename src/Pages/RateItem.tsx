@@ -25,7 +25,7 @@ export default function RateItem() {
   const [displayItems, setDisplayItems] = React.useState<DrinkItem[]>([]);
   const [value, setValue] = React.useState<number | null>(0);
   const [hover, setHover] = React.useState(-1);
-  
+
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>, newValue: number) => {
     setValue(newValue);
   }
@@ -63,9 +63,9 @@ export default function RateItem() {
   }, [])
 
   React.useEffect(() => {
-    if(categoryId !== null){
+    if (categoryId !== null) {
       setDisplayItemsLoading(true)
-      RatingsAPI.getItemsByCateogryId(categoryId as number)
+      RatingsAPI.getItemsByCategoryId(categoryId as number)
         .then((response: DrinkItems) => {
           setDisplayItems(response.items)
           setDisplayItemsLoadingError(false)
@@ -77,7 +77,7 @@ export default function RateItem() {
         .finally(() => {
           setDisplayItemsLoading(false)
         })
-  }
+    }
   }, [categoryId])
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
@@ -97,105 +97,106 @@ export default function RateItem() {
 
   return (
     <>
-    <HeaderBar/>
-    <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                >
+      <HeaderBar />
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+      >
 
-            <Grid item xs={3}>
-    <Stack
-      component="form"
-      sx={{
-        width: '25ch',
-      }}
-      spacing={2}
-      noValidate
-      autoComplete="off"
-    >
-      <FormControl>
-        <InputLabel id="input-category-select-label">Category</InputLabel>
-        <Select
-          labelId="input-category"
-          id="demo-simple-select-standard"
-          value={categoryId?.toString() || ''}
-          onChange={handleCategoryChange}
-          label="Category"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {
-            categories.map((category) => (
-              <MenuItem
-                value={category.id}
-                key={category.id + '-key'}
-              >{category.name}</MenuItem>
-            ))
-          }
-        </Select>
-      </FormControl>
-
-      {categoryIsLoading ?
-        <LoadingButton/>
-        :
-         categoryIsLoadingError ? 
-        <Typography>{categoryErrorMessage}</Typography>
-        :
-          categoryId === null ?
-          <></>
-          :
-            displayItemsLoading ?
-            <LoadingButton/>
-            :
-              displayItemsLoadingError ?
-              <Typography>{displayItemsLoadingErrorMessage}</Typography>
-              :
-          (<>
-
-    <FormControl>
-        <InputLabel id="input-category-select-label">Item</InputLabel>
-        <Select
-              id="select-item"
-              label="Items"
-              value={displayItem?.toString() || ''}
-              onChange={handleItemChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {
-              displayItems.map((option: DrinkItem) => (
-                <MenuItem key={option.id} value={option.id}>
-                  {option.name}
+        <Grid item xs={3}>
+          <Stack
+            component="form"
+            sx={{
+              width: '25ch',
+            }}
+            spacing={2}
+            noValidate
+            autoComplete="off"
+          >
+            <FormControl>
+              <InputLabel id="input-category-select-label">Category</InputLabel>
+              <Select
+                labelId="input-category"
+                id="demo-simple-select-standard"
+                value={categoryId?.toString() || ''}
+                onChange={handleCategoryChange}
+                label="Category"
+              >
+                <MenuItem value="">
+                  <em>None</em>
                 </MenuItem>
-              ))}
-        </Select>
-      </FormControl>
+                {
+                  categories.map((category) => (
+                    <MenuItem
+                      value={category.id}
+                      key={category.id + '-key'}
+                    >{category.name}</MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
 
-            <HoverRating
-              value={value}
-              hover={hover}
-              handleOnChange={handleOnChange}
-              handleOnChangeActive={handleOnChangeActive} />
+            {categoryIsLoading ?
+              <LoadingButton />
+              :
+              categoryIsLoadingError ?
+                <Typography>{categoryErrorMessage}</Typography>
+                :
+                categoryId === null ?
+                  <></>
+                  :
+                  displayItemsLoading ?
+                    <LoadingButton />
+                    :
+                    displayItemsLoadingError ?
+                      <Typography>{displayItemsLoadingErrorMessage}</Typography>
+                      :
+                      (<>
 
-            <Button
-              onClick={() => {
-                handleSubmit();
-              }}
-            >
-              Submit
-            </Button>
-          </>
-          )
-        }
-    </Stack>
-    </Grid>
-    </Grid>
-    <Footer/>
+                        <FormControl>
+                          <InputLabel id="input-category-select-label">Item</InputLabel>
+                          <Select
+                            id="select-item"
+                            label="Items"
+                            value={displayItem?.toString() || ''}
+                            onChange={handleItemChange}
+                          >
+                            <MenuItem value="">
+                              <em>None</em>
+                            </MenuItem>
+                            {
+                              displayItems.map((option: DrinkItem) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        </FormControl>
+
+                        <HoverRating
+                          value={value}
+                          hover={hover}
+                          handleOnChange={handleOnChange}
+                          handleOnChangeActive={handleOnChangeActive} />
+
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            handleSubmit();
+                          }}
+                        >
+                          Submit
+                        </Button>
+                      </>
+                      )
+            }
+          </Stack>
+        </Grid>
+      </Grid>
+      <Footer />
     </>
   );
 }

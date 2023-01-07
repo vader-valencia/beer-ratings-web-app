@@ -4,6 +4,8 @@ import * as RatingsAPI from "../API/Ratings";
 import Footer from "../Components/Footer";
 import HeaderBar from "../Components/HeaderBar";
 import LoadingBackDrop from "../Components/LoadingBackDrop";
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function NewCategory() {
@@ -14,6 +16,7 @@ export default function NewCategory() {
     const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
     const [isSubmitError, setIsSubmitError] = React.useState<boolean>(false);
     const [backDropIsOpen, setBackDropIsOpen] = React.useState(false);
+    const navigate = useNavigate();
 
 
     React.useEffect(() => {
@@ -32,6 +35,7 @@ export default function NewCategory() {
             .then((response) => {
                 setSuccessMessage(response.successMessage)
                 setIsSubmitting(false)
+                setTimeout(() => navigate(`/`), 2000);
             })
             .catch((error) => {
                 console.log(error.message)
@@ -97,6 +101,7 @@ export default function NewCategory() {
                         />
 
                         <Button
+                            variant="contained"
                             disabled={name === '' || submittedBy === ''}
                             onClick={() => {
                                 handleSubmit();
@@ -106,18 +111,13 @@ export default function NewCategory() {
                         </Button>
 
                         <LoadingBackDrop
-                            backDropIsOpen={false}
-                            setBackDropIsOpen={function (newVal: boolean): void {
-                                throw new Error("Function not implemented.");
-                            }}
-                            isSubmitting={false}
-                            isSubmitError={false}
-                            errorMessage={null}
-                            successMessage={null}
+                            backDropIsOpen={backDropIsOpen}
+                            setBackDropIsOpen={setBackDropIsOpen}
+                            isSubmitting={isSubmitting}
+                            isSubmitError={isSubmitError}
+                            errorMessage={errorMessage}
+                            successMessage={successMessage}
                         />
-
-
-
 
                     </Stack>
 

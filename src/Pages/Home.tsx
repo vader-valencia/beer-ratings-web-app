@@ -39,49 +39,49 @@ export default function Homepage() {
 
 
   return (
-      <>
+    <>
       <HeaderBar />
       <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                >
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+      >
 
-            <Grid item xs={3}>
-            <img src={HappyHour}
-              style={{
-                width: 'auto',
-                height: '25vh'
-              }} 
-              />
-            </Grid>
+        <Grid item xs={3}>
+          <img src={HappyHour}
+            style={{
+              width: 'auto',
+              height: '25vh'
+            }}
+          />
+        </Grid>
 
-            <Grid item xs={3}>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Have fun, and enjoy responsibly!
-            </Typography>
-            </Grid>
+        <Grid item xs={3}>
+          <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            Have fun, and enjoy responsibly!
+          </Typography>
+        </Grid>
 
-            <Grid item xs={3}>
-            <QRSet
-              portNumber={3000}
-              QRCodesToGenerate={QRArray}
-            />
-            </Grid>
+        <Grid item xs={3}>
+          <QRSet
+            portNumber={3000}
+            QRCodesToGenerate={QRArray}
+          />
+        </Grid>
 
-          <Grid item xs={3}>
-            <CallableCarousel
-              getFunction={RatingsAPI.getAllTopRated}
-              getFunctionArguments={[10]}
-            />
-            </Grid>
+        <Grid item xs={3}>
+          <CallableCarousel
+            getFunction={RatingsAPI.getAllTopRated}
+            getFunctionArguments={[10]}
+          />
+        </Grid>
 
-          </Grid>
+      </Grid>
 
 
-      <Footer/>
-      </>
+      <Footer />
+    </>
   );
 }

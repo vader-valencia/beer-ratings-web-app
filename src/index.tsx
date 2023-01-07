@@ -6,6 +6,7 @@ import RateItem from "./Pages/RateItem";
 import React from "react";
 import Category from "./Pages/Category";
 import NewCategory from "./Pages/NewCategory";
+import Categories from "./Pages/Categories";
 
 
 export default function App() {
@@ -15,10 +16,11 @@ export default function App() {
       <Routes>
         <Route path="/" >
           <Route index element={<Home />} />
-          <Route path="new-category" element={<NewCategory/>} />
-          <Route path="new-item" element={<NewItem/>} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="new-category" element={<NewCategory />} />
+          <Route path="new-item" element={<NewItem />} />
           <Route path="rate-item" element={<RateItem />} />
-          <Route path='category/:categoryName' element={<Category/>} />
+          <Route path='categories/:id' element={<Category />} />
         </Route>
       </Routes>
     </BrowserRouter>
