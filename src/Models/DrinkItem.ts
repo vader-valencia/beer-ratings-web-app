@@ -1,12 +1,14 @@
-export default interface DrinkItem{
+export default interface DrinkItem {
     id: number
     name: string
     submittedBy: string
     description: string
     image?: string
+    rating?: number
+    numRatings?: number
 }
 
-export interface NewDrinkItem{
+export interface NewDrinkItem {
     categoryId: number
     name: string
     description: string
@@ -14,15 +16,15 @@ export interface NewDrinkItem{
     image: string | null
 }
 
-export interface DrinkItems{
+export interface DrinkItems {
     items: DrinkItem[]
 }
 
-export interface SkinnyItem{
+export interface SkinnyItem {
     id: number
     name: string
 }
 
-export interface SkinnyItems{
+export interface SkinnyItems {
     skinnyItems: SkinnyItem[]
 }

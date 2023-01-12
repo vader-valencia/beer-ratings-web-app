@@ -4,12 +4,13 @@ import Carousel from "../Components/Carousel";
 import * as RatingsAPI from "../API/Ratings";
 import LabeledImage from "../Models/LabeledImage";
 import { CircularProgress, Grid, Typography } from "@mui/material";
-import CallableCarousel from "../Components/HomePageCarousel";
+import CallableCarousel from "../Components/CallableCarousel";
 import { Container } from "@mui/system";
 import HeaderBar from "../Components/HeaderBar";
 import Footer from "../Components/Footer";
 import { CategoryIdResponse } from "../Models/Category";
 import { DrinkItems } from "../Models/DrinkItem";
+import { DisplayLocations } from "../Models/DisplayLocation";
 
 
 export default function Category() {
@@ -27,7 +28,7 @@ export default function Category() {
             setIsLoading(true)
             RatingsAPI.getCategoryById(categoryId)
                 .then((response) => {
-                    setDisplayString(`${response.name} + Top ${numitems}!`)
+                    setDisplayString(`${response.name} - Top ${numitems}!`)
                     setIsLoadingError(false)
                 })
                 .catch((error: any) => {
@@ -53,16 +54,12 @@ export default function Category() {
             >
 
                 <Grid item xs={3}>
-                    <Container>
-                        <Typography>
-                            {displayString}
-                        </Typography>
-
-                        <CallableCarousel
-                            getFunction={RatingsAPI.getCategoryTopRated}
-                            getFunctionArguments={{ numItems: 10, categoryId: categoryId }}
-                        />
-                    </Container>
+                    <CallableCarousel
+                        carouselTitle={displayString}
+                        getFunction={RatingsAPI.getCategoryTopRated}
+                        getFunctionArguments={{ numItems: 10, categoryId: categoryId }}
+                        labelDisplayLocation={DisplayLocations.Above}
+                    />
                 </Grid>
             </Grid>
             <Footer />

@@ -9,10 +9,12 @@ import DrinkItem, { DrinkItems } from '../Models/DrinkItem';
 import { Ratings } from '../Models/Rating';
 import '../Styles/App.css';
 import Footer from "../Components/Footer";
+import LoadingBackDrop from '../Components/LoadingBackDrop';
+import { useNavigate } from 'react-router-dom';
+import PostResponse from '../Models/PostResponse';
 
 export default function RateItem() {
 
-  const [message, setMessage] = React.useState<Ratings | null>(null);
   const [categoryId, setCategoryId] = React.useState<number | null>(null);
   const [categories, setCategories] = React.useState<Category[]>([]);
   const [categoryIsLoadingError, setCategoryIsLoadingError] = React.useState<boolean>(false);
@@ -25,6 +27,12 @@ export default function RateItem() {
   const [displayItems, setDisplayItems] = React.useState<DrinkItem[]>([]);
   const [value, setValue] = React.useState<number | null>(0);
   const [hover, setHover] = React.useState(-1);
+  const [isBackDropOpen, setIsBackDropOpen] = React.useState<boolean>(false);
+  const [isSubmitLoading, setIsSubmitLoading] = React.useState<boolean>(false);
+  const [isSubmitError, setIsSubmitError] = React.useState<boolean>(false);
+  const [submitErrorMessage, setSubmitErrorMessage] = React.useState<string>('');
+  const [submitSuccessMessage, setSubmitSuccessMessage] = React.useState<string>('');
+  const navigate = useNavigate();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>, newValue: number) => {
     setValue(newValue);
@@ -37,13 +45,20 @@ export default function RateItem() {
     const newRating = {
       rating: value as number
     }
+    setIsSubmitLoading(true)
+    setIsBackDropOpen(true)
     RatingsAPI.postRating(displayItem as number, newRating)
-      .then((response) => {
-        setMessage(response)
+      .then((response: PostResponse) => {
+        setSubmitSuccessMessage(response.successMessage)
+        setIsSubmitLoading(false)
+        setTimeout(() => navigate(`/`), 2000);
       })
-      .catch(error => console.log(error.message))
+      .catch(error => {
+        setSubmitErrorMessage(error.message)
+        setIsSubmitError(true)
+      })
       .finally(() => {
-        console.log('Item rating added completed');
+        setIsSubmitLoading(false)
       });
   }
 
@@ -190,6 +205,15 @@ export default function RateItem() {
                         >
                           Submit
                         </Button>
+
+                        <LoadingBackDrop
+                          isBackDropOpen={isBackDropOpen}
+                          setIsBackDropOpen={setIsBackDropOpen}
+                          isSubmitting={isSubmitLoading}
+                          isSubmitError={isSubmitError}
+                          errorMessage={submitErrorMessage}
+                          successMessage={submitSuccessMessage}
+                        />
                       </>
                       )
             }

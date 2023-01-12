@@ -15,7 +15,7 @@ export default function NewCategory() {
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
     const [isSubmitError, setIsSubmitError] = React.useState<boolean>(false);
-    const [backDropIsOpen, setBackDropIsOpen] = React.useState(false);
+    const [isBackDropOpen, setIsBackDropOpen] = React.useState(false);
     const navigate = useNavigate();
 
 
@@ -30,7 +30,7 @@ export default function NewCategory() {
         }
 
         setIsSubmitting(true)
-        setBackDropIsOpen(true)
+        setIsBackDropOpen(true)
         RatingsAPI.postNewCategory(newCategory)
             .then((response) => {
                 setSuccessMessage(response.successMessage)
@@ -111,8 +111,8 @@ export default function NewCategory() {
                         </Button>
 
                         <LoadingBackDrop
-                            backDropIsOpen={backDropIsOpen}
-                            setBackDropIsOpen={setBackDropIsOpen}
+                            isBackDropOpen={isBackDropOpen}
+                            setIsBackDropOpen={setIsBackDropOpen}
                             isSubmitting={isSubmitting}
                             isSubmitError={isSubmitError}
                             errorMessage={errorMessage}

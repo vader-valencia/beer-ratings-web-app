@@ -1,4 +1,4 @@
-import { Grid, Stack } from '@mui/material';
+import { Divider, Grid, Stack } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -10,10 +10,11 @@ import Typography from '@mui/material/Typography';
 import * as RatingsAPI from "../API/Ratings";
 import Footer from '../Components/Footer';
 import HeaderBar from '../Components/HeaderBar';
-import CallableCarousel from '../Components/HomePageCarousel';
+import CallableCarousel from '../Components/CallableCarousel';
 import QRSet from '../Components/QRSet';
 import HappyHour from "../Images/HappyHour.png";
 import { QRCodeOptions } from '../Models/QRCodeRequestQueryOptions';
+import { DisplayLocations } from '../Models/DisplayLocation';
 
 
 
@@ -27,10 +28,10 @@ const flexContainer = {
   padding: 0,
 };
 
-const homePage: QRCodeOptions = { webPath: '', altText: 'Home Page', fillColor: 'black', backgroundColor: 'gold' }
-const newCategory: QRCodeOptions = { webPath: 'new-category', altText: 'New Category', fillColor: 'gold', backgroundColor: 'black' }
-const newItem: QRCodeOptions = { webPath: 'new-item', altText: 'New Item', fillColor: 'gold', backgroundColor: 'black' }
-const rateItem: QRCodeOptions = { webPath: 'rate-item', altText: 'Rate Item', fillColor: 'black', backgroundColor: 'gold' }
+const homePage: QRCodeOptions = { webPath: 'categories', altText: 'Browse Categories', fillColor: 'white', backgroundColor: 'blue' }
+const newCategory: QRCodeOptions = { webPath: 'new-category', altText: 'New Category', fillColor: 'blue', backgroundColor: 'white' }
+const newItem: QRCodeOptions = { webPath: 'new-item', altText: 'New Item', fillColor: 'blue', backgroundColor: 'white' }
+const rateItem: QRCodeOptions = { webPath: 'rate-item', altText: 'Rate Item', fillColor: 'white', backgroundColor: 'blue' }
 const QRArray = [homePage, newCategory, newItem, rateItem]
 
 const theme = createTheme();
@@ -73,8 +74,10 @@ export default function Homepage() {
 
         <Grid item xs={3}>
           <CallableCarousel
+            carouselTitle='Top Rated - All Categories'
             getFunction={RatingsAPI.getAllTopRated}
             getFunctionArguments={[10]}
+            labelDisplayLocation={DisplayLocations.Below}
           />
         </Grid>
 

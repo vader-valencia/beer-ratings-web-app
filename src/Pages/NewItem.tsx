@@ -29,7 +29,7 @@ export default function NewItem() {
   const [image, setImage] = React.useState<string | null>(null);
   const [optedForPhoto, setOptedForPhoto] = React.useState<boolean>(false);
   const [description, setDescription] = React.useState<string>('');
-  const [backDropIsOpen, setBackDropIsOpen] = React.useState(false);
+  const [isBackDropOpen, setBackDropIsOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const createNewItem = () => {
@@ -215,8 +215,8 @@ export default function NewItem() {
                   </Button>
 
                   <LoadingBackDrop
-                    backDropIsOpen={backDropIsOpen}
-                    setBackDropIsOpen={setBackDropIsOpen}
+                    isBackDropOpen={isBackDropOpen}
+                    setIsBackDropOpen={setBackDropIsOpen}
                     isSubmitting={isSubmitLoading}
                     isSubmitError={isSubmitError}
                     errorMessage={submitErrorMessage}
