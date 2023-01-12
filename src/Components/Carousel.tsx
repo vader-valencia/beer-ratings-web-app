@@ -56,7 +56,7 @@ export default function Carousel(props: CarouselProps) {
             {
               (props.labelDisplayLocation === DisplayLocations.Above) ?
                 <Typography>
-                  {`(${activeStep + 1}) ${props.images[activeStep].label}`}
+                  {`#${activeStep + 1} - ${props.images[activeStep].label}`}
                 </Typography>
                 :
                 <></>
@@ -137,7 +137,7 @@ export default function Carousel(props: CarouselProps) {
             {
               (props.labelDisplayLocation === DisplayLocations.Below) ?
                 <Typography>
-                  {`(${activeStep + 1}) ${props.images[activeStep].label}`}
+                  {`#${activeStep + 1} - ${props.images[activeStep].label}`}
                 </Typography> :
                 <></>
             }
